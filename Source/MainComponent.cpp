@@ -48,6 +48,42 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
     bufferToFill.clearActiveBufferRegion();
+
+    auto* device = deviceManager.getCurrentAudioDevice();
+    auto activeInputChannels = device->getActiveInputChannels();
+    auto activeOutputChannels = device->getActiveOutputChannels();
+
+    auto maxInputChannels = activeInputChannels.getHighestBit() + 1;
+    auto maxOutputChannels = activeOutputChannels.getHighestBit() + 1;
+
+    auto* buffer = bufferToFill.buffer;
+    
+
+    for (auto channel = 0; channel < maxOutputChannels; ++channel)
+    {
+        if ((!activeOutputChannels[channel]) || maxInputChannels == 0)
+        {
+            buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+        }
+        else
+        {
+            auto actualInputChannel = channel % maxInputChannels;
+
+            if (!activeInputChannels[channel])
+            {
+                buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+            }
+            else
+            {
+                auto* inBuffer = buffer->getReadPointer(actualInputChannel, bufferToFill.startSample);
+                auto* outBuffer = buffer->getWritePointer(channel, bufferToFill.startSample);
+
+                for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
+                    outBuffer[sample] = inBuffer[sample];
+                }
+            }
+        }
+    }
 }
 
 void MainComponent::releaseResources()
