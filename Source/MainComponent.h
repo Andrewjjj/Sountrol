@@ -23,6 +23,8 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
+    void initializeFrequencies();
+
 private:
     //==============================================================================
     // Your private member variables go here...
@@ -30,9 +32,10 @@ private:
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
     using GainProcessor = juce::dsp::Gain<float>;
+    using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     //
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1;
+    //juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

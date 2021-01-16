@@ -30,20 +30,30 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
+    initializeFrequencies();
     juce::dsp::ProcessSpec spec;
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlockExpected;
     spec.numChannels = 2;
 
-    filterBand1L.reset();
-    auto& gain1L = filterBand1L.get<0>();
+    filterBand1.reset();
+    auto& filter1Low = filterBand1.get<0>();
+    auto& filter1High = filterBand1.get<1>();
+    auto& gain1L = filterBand1.get<2>();
+    filter1Low.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq1Low);
+    filter1High.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq1High);
     gain1L.setGainDecibels(-20.0f);
-    filterBand1L.prepare(spec);
+    filterBand1.prepare(spec);
 
-    filterBand1R.reset();
-    auto& gain1R = filterBand1R.get<0>();
-    gain1R.setGainDecibels(-20.0f);
-    filterBand1R.prepare(spec);
+    //filterBand1R.reset();
+    //auto& gain1R = filterBand1R.get<2>();
+    //gain1R.setGainDecibels(-20.0f);
+    //filterBand1R.prepare(spec);
+}
+
+void MainComponent::initializeFrequencies() {
+    freq1Low = 1000.0f;
+    freq1High = 2500.0f;
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -83,12 +93,13 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                 buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
                 
                 juce::dsp::ProcessContextReplacing<float>pc1(block1.getSingleChannelBlock(channel));
-                if (channel == 0) {
-                    filterBand1L.process(pc1);
-                }
-                else {
-                    filterBand1R.process(pc1);
-                }
+                filterBand1.process(pc1);
+
+                //if (channel == 0) {
+                //}
+                //else {
+                //    filterBand1R.process(pc1);
+                //}
                 buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, 1);
 
                 for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
