@@ -20,13 +20,37 @@ public:
     void releaseResources() override;
 
     //==============================================================================
+    void updateOnOffState(juce::Button* button);
+
+    //==============================================================================
     void paint (juce::Graphics& g) override;
     void resized() override;
 
 private:
     //==============================================================================
     // Your private member variables go here...
+    juce::Slider slider1;
+    juce::Slider slider2;
+    juce::Slider slider3;
+    juce::Slider slider4;
+    juce::Label lblSlider1;
+    juce::Label lblSlider2;
+    juce::Label lblSlider3;
+    juce::Label lblSlider4;
 
+    juce::TextButton btnResetSlider1{ "Reset" };
+    juce::TextButton btnResetSlider2{ "Reset" };
+    juce::TextButton btnResetSlider3{ "Reset" };
+    juce::TextButton btnResetSlider4{ "Reset" };
+    
+    juce::ToggleButton btnBypassSlider1{ "Bypass" };
+    juce::ToggleButton btnBypassSlider2{ "Bypass" };
+    juce::ToggleButton btnBypassSlider3{ "Bypass" };
+    juce::ToggleButton btnBypassSlider4{ "Bypass" };
+
+    juce::TextButton btnOnOff{ "Sountrol On" };
+    juce::TextButton btnSettings{ "Sound Settings" };
+    juce::TextButton btnResetAll{ "Reset All" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
