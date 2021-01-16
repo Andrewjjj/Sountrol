@@ -85,6 +85,9 @@ private:
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
 
+    juce::ToggleButton lowCutBtn{ "Cut Unncessary Sounds" };
+
+
 private:
     float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;

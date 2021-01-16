@@ -6,7 +6,7 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (800, 600);
+    setSize (450, 600);
 
     
     // Sliders
@@ -17,7 +17,7 @@ MainComponent::MainComponent()
     slider1.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     
     addAndMakeVisible(lblSlider1);
-    lblSlider1.setText("Slider1", juce::dontSendNotification);
+    lblSlider1.setText("Bassiness", juce::dontSendNotification);
     lblSlider1.attachToComponent(&slider1, false);
 
     addAndMakeVisible(slider2);
@@ -27,7 +27,7 @@ MainComponent::MainComponent()
     slider2.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
 
     addAndMakeVisible(lblSlider2);
-    lblSlider2.setText("Slider2", juce::dontSendNotification);
+    lblSlider2.setText("Boxiness", juce::dontSendNotification);
     lblSlider2.attachToComponent(&slider2, false);
 
     addAndMakeVisible(slider3);
@@ -37,7 +37,7 @@ MainComponent::MainComponent()
     slider3.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
 
     addAndMakeVisible(lblSlider3);
-    lblSlider3.setText("Slider3", juce::dontSendNotification);
+    lblSlider3.setText("Sharpness", juce::dontSendNotification);
     lblSlider3.attachToComponent(&slider3, false);
 
     addAndMakeVisible(slider4);
@@ -47,7 +47,7 @@ MainComponent::MainComponent()
     slider4.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
 
     addAndMakeVisible(lblSlider4);
-    lblSlider4.setText("Slider4", juce::dontSendNotification);
+    lblSlider4.setText("Hissssiness", juce::dontSendNotification);
     lblSlider4.attachToComponent(&slider4, false);
 
 
@@ -63,8 +63,14 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnBypassSlider3);
     addAndMakeVisible(btnBypassSlider4);
 
+    addAndMakeVisible(lowCutBtn);
+    
+
+
     // Global Buttons
     addAndMakeVisible(btnOnOff);
+    btnOnOff.setColour(0x1000100, juce::Colours::forestgreen);
+    btnOnOff.setColour(0x1000101, juce::Colours::indianred);
     btnOnOff.setClickingTogglesState(true);
     btnOnOff.onClick = [this] {
         updateOnOffState(&btnOnOff); 
@@ -206,6 +212,17 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     auto& lowFilter6R = filterBand6R.get<0>();
     lowFilter6R.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq6Low);
     filterBand6R.prepare(spec);
+
+
+    //lowCutBtn.onClick = [this, sampleRate] {
+    //    auto state = lowCutBtn.getToggleState();
+    //    DBG(std::to_string(state == true));
+    //    freq1Low = (state == true) ? 0.0f : 100.0f;
+    //    auto& lowFilter1LFreq = filterBand1L.get<0>().state;
+    //    lowFilter1LFreq = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq1Low);
+    //    auto& lowFilter1RFreq = filterBand1R.get<0>().state;
+    //    lowFilter1RFreq = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq1Low);
+    //};
 }
 
 void MainComponent::initializeFrequencies() {
@@ -371,6 +388,7 @@ void MainComponent::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     // You can add your drawing code here!
+    
 }
 
 void MainComponent::resized()
@@ -378,22 +396,24 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    slider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 100, 45, 150);
-    slider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 100, 45, 150);
-    slider3.setBounds(getWidth() / 2, getHeight() / 2 - 100, 45, 150);
-    slider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 - 100, 45, 150);
+    slider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 100, 100, 150);
+    slider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 100, 100, 150);
+    slider3.setBounds(getWidth() / 2, getHeight() / 2 - 100, 100, 150);
+    slider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 - 100, 100, 150);
 
     btnResetSlider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 150, 40, 20);
     btnResetSlider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 40, 20);
     btnResetSlider3.setBounds(getWidth() / 2, getHeight() / 2 - 150, 40, 20);
     btnResetSlider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 - 150, 40, 20);
 
-    btnBypassSlider1.setBounds(getWidth() / 2 - 210, getHeight() / 2 + 60, 80, 20);
-    btnBypassSlider2.setBounds(getWidth() / 2 - 110, getHeight() / 2 + 60, 80, 20);
-    btnBypassSlider3.setBounds(getWidth() / 2 - 10, getHeight() / 2 + 60, 80, 20);
-    btnBypassSlider4.setBounds(getWidth() / 2 + 90, getHeight() / 2 + 60, 80, 20);
+    btnBypassSlider1.setBounds(getWidth() / 2 - 210, getHeight() / 2 + 60, 80, 80);
+    btnBypassSlider2.setBounds(getWidth() / 2 - 110, getHeight() / 2 + 60, 80, 80);
+    btnBypassSlider3.setBounds(getWidth() / 2 - 10, getHeight() / 2 + 60, 80, 80);
+    btnBypassSlider4.setBounds(getWidth() / 2 + 90, getHeight() / 2 + 60, 80, 80);
+
+    lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
-    btnSettings.setBounds(20, getHeight() - 100, 200, 50);
-    btnResetAll.setBounds(getWidth() / 2 - 20, getHeight() - 100, 200, 50);
+    btnSettings.setBounds(20, getHeight() - 100, 180, 50);
+    btnResetAll.setBounds(getWidth() / 2 - 20, getHeight() - 100, 180, 50);
 }
