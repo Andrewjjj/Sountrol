@@ -50,6 +50,7 @@ private:
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
 
+private:
     float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
@@ -57,11 +58,26 @@ private:
     using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     //
 
-    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1;
-    //juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
 
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand2L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand2R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5R;
+
+    juce::dsp::ProcessorChain<HLFilter> filterBand6L;
+    juce::dsp::ProcessorChain<HLFilter> filterBand6R;
+
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
 
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
