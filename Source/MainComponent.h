@@ -2,28 +2,28 @@
 
 #include <JuceHeader.h>
 
-class SettingsWindow : public juce::DocumentWindow, juce::AudioAppComponent
-{
-public:
-    SettingsWindow(const juce::String name)
-        : DocumentWindow(name,
-            juce::Desktop::getInstance().getDefaultLookAndFeel()
-            .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons), audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
-    {
-        setBounds(20, 20, 300, 400);
-        setResizable(true, false);
-        setUsingNativeTitleBar(true);
-    }
-
-    void closeButtonPressed() {
-        setVisible(false);
-    }
-
-private:
-    juce::AudioDeviceSelectorComponent audioSetupComp;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
-};
+//class SettingsWindow : public juce::DocumentWindow, juce::AudioAppComponent
+//{ 
+//public:
+//    SettingsWindow(const juce::String name)
+//        : DocumentWindow(name,
+//            juce::Desktop::getInstance().getDefaultLookAndFeel()
+//            .findColour(juce::ResizableWindow::backgroundColourId),
+//            DocumentWindow::allButtons), audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
+//    {
+//        setBounds(20, 20, 300, 400);
+//        setResizable(true, false);
+//        setUsingNativeTitleBar(true);
+//    }
+//
+//    void closeButtonPressed() {
+//        setVisible(false);
+//    }
+//
+//private:
+//    juce::AudioDeviceSelectorComponent audioSetupComp;
+//    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
+//};
 
 //==============================================================================
 /*
@@ -56,15 +56,15 @@ private:
     //==============================================================================
     // Your private member variables go here...
 
-    std::unique_ptr<SettingsWindow> window;
+    //std::unique_ptr<SettingsWindow> window;
 
-    void showSettingsWindow()
-    {
-        if (window == nullptr) {
-            window.reset(new SettingsWindow("Window"));
-        }
-        window->setVisible(true);
-    }
+    //void showSettingsWindow()
+    //{
+    //    if (window == nullptr) {
+    //        window.reset(new SettingsWindow("Window"));
+    //    }
+    //    window->setVisible(true);
+    //}
 
     juce::Slider slider1;
     juce::Slider slider2;
@@ -92,9 +92,6 @@ private:
     using GainProcessor = juce::dsp::Gain<float>;
     using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     using CompressorProcessor = juce::dsp::Compressor<float>;
-    //
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
 
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1L;
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;

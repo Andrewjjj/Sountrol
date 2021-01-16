@@ -2,7 +2,7 @@
 
 //==============================================================================
 MainComponent::MainComponent()
-    : audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, true, true)
+    : audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
 {
     // Make sure you set the size of the component after
     // you add any child components.
@@ -71,7 +71,7 @@ MainComponent::MainComponent()
     };
 
     addAndMakeVisible(btnSettings);
-    btnSettings.onClick = [this] { showSettingsWindow(); };
+    //btnSettings.onClick = [this] { showSettingsWindow(); };
 
     addAndMakeVisible(btnResetAll);
 
