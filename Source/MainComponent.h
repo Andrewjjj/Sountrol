@@ -57,6 +57,7 @@ private:
 
     using GainProcessor = juce::dsp::Gain<float>;
     using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
+    using CompressorProcessor = juce::dsp::Compressor<float>;
     //
 
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1L;
@@ -71,18 +72,17 @@ private:
     //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4L;
     //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4R;
 
-    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5L;
-    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5R;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, CompressorProcessor> filterBand5L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, CompressorProcessor> filterBand5R;
 
     juce::dsp::ProcessorChain<HLFilter> filterBand6L;
     juce::dsp::ProcessorChain<HLFilter> filterBand6R;
 
-    //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
-    //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
-
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
+
+    bool btnOn = true;
 
 private:
     juce::AudioDeviceSelectorComponent audioSetupComp;

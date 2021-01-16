@@ -8,7 +8,7 @@ MainComponent::MainComponent()
     // you add any child components.
     setSize (800, 600);
 
-
+    
     // Sliders
     addAndMakeVisible(slider1);
     slider1.setRange(-30.0f, 5.0f, 0.1f);
@@ -41,7 +41,7 @@ MainComponent::MainComponent()
     lblSlider3.attachToComponent(&slider3, false);
 
     addAndMakeVisible(slider4);
-    slider4.setRange(-300.0f, 5.0f, 0.1f);
+    slider4.setRange(-60.0f, 5.0f, 0.1f);
     slider4.setValue(0.0f);
     slider4.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     slider4.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -68,7 +68,9 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnSettings);
     addAndMakeVisible(btnResetAll);
     btnOnOff.setClickingTogglesState(true);
-    btnOnOff.onClick = [this] {updateOnOffState(&btnOnOff); };
+    btnOnOff.onClick = [this] {
+        updateOnOffState(&btnOnOff); 
+    };
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -174,19 +176,21 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     filterBand5L.reset();
     auto& lowFilter5L = filterBand5L.get<0>();
     auto& highFilter5L = filterBand5L.get<1>();
-    auto& gain5L = filterBand5L.get<2>();
+    auto& compressor5L = filterBand5L.get<2>();
     lowFilter5L.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq5Low);
     highFilter5L.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq5High);
-    gain5L.setGainDecibels(0.0f);
+    compressor5L.setThreshold(0.0f);
+    compressor5L.setRatio(10);
     filterBand5L.prepare(spec);
 
     filterBand5R.reset();
     auto& lowFilter5R = filterBand5R.get<0>();
     auto& highFilter5R = filterBand5R.get<1>();
-    auto& gain5R = filterBand5R.get<2>();
+    auto& compressor5R = filterBand5R.get<2>();
     lowFilter5R.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq5Low);
     highFilter5R.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq5High);
-    gain5R.setGainDecibels(0.0f);
+    compressor5R.setThreshold(0.0f);
+    compressor5R.setRatio(10);
     filterBand5R.prepare(spec);
 
 
@@ -242,8 +246,8 @@ void MainComponent::updateParameters() {
     auto& gain4L = filterBand5L.get<2>();
     auto& gain4R = filterBand5R.get<2>();
 
-    gain4L.setGainDecibels(newValue4);
-    gain4R.setGainDecibels(newValue4);
+    gain4L.setThreshold(newValue4);
+    gain4R.setThreshold(newValue4);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -332,7 +336,6 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                 //buffer->addFrom(channel, 0, buffer4, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer5, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer6, channel, 0, bufferToFill.numSamples, 1.0f);
-
 
                 for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
                     outBuffer[sample] = inBuffer[sample];
