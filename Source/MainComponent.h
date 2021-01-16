@@ -2,6 +2,29 @@
 
 #include <JuceHeader.h>
 
+class SettingsWindow : public juce::DocumentWindow, juce::AudioAppComponent
+{
+public:
+    SettingsWindow(const juce::String name)
+        : DocumentWindow(name,
+            juce::Desktop::getInstance().getDefaultLookAndFeel()
+            .findColour(juce::ResizableWindow::backgroundColourId),
+            DocumentWindow::allButtons), audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
+    {
+        setBounds(20, 20, 300, 400);
+        setResizable(true, false);
+        setUsingNativeTitleBar(true);
+    }
+
+    void closeButtonPressed() {
+        setVisible(false);
+    }
+
+private:
+    juce::AudioDeviceSelectorComponent audioSetupComp;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
+};
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -32,6 +55,17 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
+
+    std::unique_ptr<SettingsWindow> window;
+
+    void showSettingsWindow()
+    {
+        if (window == nullptr) {
+            window.reset(new SettingsWindow("Window"));
+        }
+        window->setVisible(true);
+    }
+
     juce::Slider slider1;
     juce::Slider slider2;
     juce::Slider slider3;
@@ -59,6 +93,8 @@ private:
     using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     using CompressorProcessor = juce::dsp::Compressor<float>;
     //
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
 
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1L;
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
@@ -78,6 +114,9 @@ private:
     juce::dsp::ProcessorChain<HLFilter> filterBand6L;
     juce::dsp::ProcessorChain<HLFilter> filterBand6R;
 
+
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
@@ -89,3 +128,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
+

@@ -65,12 +65,15 @@ MainComponent::MainComponent()
 
     // Global Buttons
     addAndMakeVisible(btnOnOff);
-    addAndMakeVisible(btnSettings);
-    addAndMakeVisible(btnResetAll);
     btnOnOff.setClickingTogglesState(true);
     btnOnOff.onClick = [this] {
         updateOnOffState(&btnOnOff); 
     };
+
+    addAndMakeVisible(btnSettings);
+    btnSettings.onClick = [this] { showSettingsWindow(); };
+
+    addAndMakeVisible(btnResetAll);
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
