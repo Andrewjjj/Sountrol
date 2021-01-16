@@ -37,6 +37,10 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = sampleRate;
+    spec.maximumBlockSize = samplesPerBlockExpected;
+    spec.numChannels = 2;
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -47,7 +51,6 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
-    bufferToFill.clearActiveBufferRegion();
 
     auto* device = deviceManager.getCurrentAudioDevice();
     auto activeInputChannels = device->getActiveInputChannels();
@@ -57,13 +60,16 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     auto maxOutputChannels = activeOutputChannels.getHighestBit() + 1;
 
     auto* buffer = bufferToFill.buffer;
-    
+
+    //juce::AudioBuffer<float> buffer1;
+    //buffer1.makeCopyOf(*buffer);
+    //juce::dsp::AudioBlock<float> block1(buffer1);
 
     for (auto channel = 0; channel < maxOutputChannels; ++channel)
     {
         if ((!activeOutputChannels[channel]) || maxInputChannels == 0)
         {
-            buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+            bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
         }
         else
         {
@@ -71,12 +77,16 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
             if (!activeInputChannels[channel])
             {
-                buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+                bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
             }
             else
             {
-                auto* inBuffer = buffer->getReadPointer(actualInputChannel, bufferToFill.startSample);
-                auto* outBuffer = buffer->getWritePointer(channel, bufferToFill.startSample);
+                auto* inBuffer = bufferToFill.buffer->getReadPointer(actualInputChannel, bufferToFill.startSample);
+                auto* outBuffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
+
+                //buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+                //filterBand1.process(juce::dsp::ProcessContextReplacing<float>(block1));
+                //buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, 0);
 
                 for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
                     outBuffer[sample] = inBuffer[sample];
