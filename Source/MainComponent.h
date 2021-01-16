@@ -20,6 +20,9 @@ public:
     void releaseResources() override;
 
     //==============================================================================
+    void updateOnOffState(juce::Button* button);
+
+    //==============================================================================
     void paint (juce::Graphics& g) override;
     void resized() override;
 
@@ -28,15 +31,41 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
+    juce::Slider slider1;
+    juce::Slider slider2;
+    juce::Slider slider3;
+    juce::Slider slider4;
+    juce::Label lblSlider1;
+    juce::Label lblSlider2;
+    juce::Label lblSlider3;
+    juce::Label lblSlider4;
+
+    juce::TextButton btnResetSlider1{ "Reset" };
+    juce::TextButton btnResetSlider2{ "Reset" };
+    juce::TextButton btnResetSlider3{ "Reset" };
+    juce::TextButton btnResetSlider4{ "Reset" };
+    
+    juce::ToggleButton btnBypassSlider1{ "Bypass" };
+    juce::ToggleButton btnBypassSlider2{ "Bypass" };
+    juce::ToggleButton btnBypassSlider3{ "Bypass" };
+    juce::ToggleButton btnBypassSlider4{ "Bypass" };
+
     float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
     using GainProcessor = juce::dsp::Gain<float>;
     using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     //
+
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1;
     //juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
 
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+
+    juce::TextButton btnOnOff{ "Sountrol On" };
+    juce::TextButton btnSettings{ "Sound Settings" };
+    juce::TextButton btnResetAll{ "Reset All" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
