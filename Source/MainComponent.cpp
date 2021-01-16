@@ -201,7 +201,7 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 }
 
 void MainComponent::initializeFrequencies() {
-    freq1Low = 1000.0f;
+    freq1Low = 100.0f;
     freq1High = 400.0f;
     freq2Low = 400.0f;
     freq2High = 1000.0f;
@@ -284,7 +284,6 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                     filterBand4L.process(pc4);
                     filterBand5L.process(pc5);
                     filterBand6L.process(pc6);
-
                 }
                 else {
                     filterBand1R.process(pc1);
@@ -293,14 +292,13 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                     filterBand4R.process(pc4);
                     filterBand5R.process(pc5);
                     filterBand6R.process(pc6);
-
                 }
-                buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, .5f);
-                buffer->addFrom(channel, 0, buffer2, channel, 0, bufferToFill.numSamples, .5f);
-                buffer->addFrom(channel, 0, buffer3, channel, 0, bufferToFill.numSamples, .5f);
-                buffer->addFrom(channel, 0, buffer4, channel, 0, bufferToFill.numSamples, .5f);
-                buffer->addFrom(channel, 0, buffer5, channel, 0, bufferToFill.numSamples, .5f);
-                buffer->addFrom(channel, 0, buffer6, channel, 0, bufferToFill.numSamples, .5f);
+                buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, 1.0f);
+                buffer->addFrom(channel, 0, buffer2, channel, 0, bufferToFill.numSamples, 1.0f);
+                buffer->addFrom(channel, 0, buffer3, channel, 0, bufferToFill.numSamples, 1.0f);
+                buffer->addFrom(channel, 0, buffer4, channel, 0, bufferToFill.numSamples, 1.0f);
+                buffer->addFrom(channel, 0, buffer5, channel, 0, bufferToFill.numSamples, 1.0f);
+                buffer->addFrom(channel, 0, buffer6, channel, 0, bufferToFill.numSamples, 1.0f);
 
 
                 for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
