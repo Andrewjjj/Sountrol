@@ -29,6 +29,7 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
+<<<<<<< HEAD
     juce::Slider slider1;
     juce::Slider slider2;
     juce::Slider slider3;
@@ -47,6 +48,15 @@ private:
     juce::ToggleButton btnBypassSlider2{ "Bypass" };
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
+=======
+    float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
+        freq4Low, freq4High, freq5Low, freq5High, freq6Low;
+
+    using GainProcessor = juce::dsp::Gain<float>;
+    //
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+>>>>>>> b1663f845679e869379c9c56c86559dfc4fc5391
 
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
