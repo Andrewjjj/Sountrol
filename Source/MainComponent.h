@@ -2,6 +2,29 @@
 
 #include <JuceHeader.h>
 
+class SettingsWindow : public juce::DocumentWindow, juce::AudioAppComponent
+{
+public:
+    SettingsWindow(const juce::String name)
+        : DocumentWindow(name,
+            juce::Desktop::getInstance().getDefaultLookAndFeel()
+            .findColour(juce::ResizableWindow::backgroundColourId),
+            DocumentWindow::allButtons), audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
+    {
+        setBounds(20, 20, 300, 400);
+        setResizable(true, false);
+        setUsingNativeTitleBar(true);
+    }
+
+    void closeButtonPressed() {
+        setVisible(false);
+    }
+
+private:
+    juce::AudioDeviceSelectorComponent audioSetupComp;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
+};
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -29,7 +52,17 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-<<<<<<< HEAD
+
+    std::unique_ptr<SettingsWindow> window;
+
+    void showSettingsWindow()
+    {
+        if (window == nullptr) {
+            window.reset(new SettingsWindow("Window"));
+        }
+        window->setVisible(true);
+    }
+
     juce::Slider slider1;
     juce::Slider slider2;
     juce::Slider slider3;
@@ -48,7 +81,7 @@ private:
     juce::ToggleButton btnBypassSlider2{ "Bypass" };
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
-=======
+
     float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
@@ -56,7 +89,6 @@ private:
     //
     juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
     juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
->>>>>>> b1663f845679e869379c9c56c86559dfc4fc5391
 
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
@@ -64,3 +96,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
+
