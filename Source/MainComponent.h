@@ -31,7 +31,9 @@ private:
 
     using GainProcessor = juce::dsp::Gain<float>;
     //
-    juce::dsp::ProcessorChain<GainProcessor> filterBand1;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

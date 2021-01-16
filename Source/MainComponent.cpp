@@ -35,11 +35,15 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     spec.maximumBlockSize = samplesPerBlockExpected;
     spec.numChannels = 2;
 
-    filterBand1.reset();
-    auto& gain1 = filterBand1.get<0>();
+    filterBand1L.reset();
+    auto& gain1L = filterBand1L.get<0>();
+    gain1L.setGainDecibels(-20.0f);
+    filterBand1L.prepare(spec);
 
-    gain1.setGainDecibels(-20.0f);
-    filterBand1.prepare(spec);
+    filterBand1R.reset();
+    auto& gain1R = filterBand1R.get<0>();
+    gain1R.setGainDecibels(-20.0f);
+    filterBand1R.prepare(spec);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -77,8 +81,14 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                 auto* outBuffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
 
                 buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
-                juce::dsp::ProcessContextReplacing<float>pc1 (block1.getSubsetChannelBlock(0, 2));
-                filterBand1.process(pc1);
+                
+                juce::dsp::ProcessContextReplacing<float>pc1(block1.getSingleChannelBlock(channel));
+                if (channel == 0) {
+                    filterBand1L.process(pc1);
+                }
+                else {
+                    filterBand1R.process(pc1);
+                }
                 buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, 1);
 
                 for (auto sample = 0; sample < bufferToFill.numSamples; ++sample) {
