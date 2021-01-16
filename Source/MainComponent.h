@@ -49,9 +49,13 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
+    void initializeFrequencies();
+    void updateParameters();
+
 private:
     //==============================================================================
     // Your private member variables go here...
+<<<<<<< HEAD
 
     std::unique_ptr<SettingsWindow> window;
 
@@ -63,6 +67,8 @@ private:
         window->setVisible(true);
     }
 
+=======
+>>>>>>> 376fbefc84918e76b39363583b556f2874765b4e
     juce::Slider slider1;
     juce::Slider slider2;
     juce::Slider slider3;
@@ -82,17 +88,49 @@ private:
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
 
+<<<<<<< HEAD
+=======
+private:
+>>>>>>> 376fbefc84918e76b39363583b556f2874765b4e
     float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
         freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
     using GainProcessor = juce::dsp::Gain<float>;
+    using HLFilter = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
     //
+<<<<<<< HEAD
     juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
     juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+=======
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand1R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand2L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand2R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3R;
+
+    //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4L;
+    //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4R;
+
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5L;
+    juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5R;
+
+    juce::dsp::ProcessorChain<HLFilter> filterBand6L;
+    juce::dsp::ProcessorChain<HLFilter> filterBand6R;
+
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
+    //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
+>>>>>>> 376fbefc84918e76b39363583b556f2874765b4e
 
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
+
+private:
+    juce::AudioDeviceSelectorComponent audioSetupComp;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
