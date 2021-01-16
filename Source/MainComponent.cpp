@@ -2,6 +2,7 @@
 
 //==============================================================================
 MainComponent::MainComponent()
+    : audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, true, true)
 {
     // Make sure you set the size of the component after
     // you add any child components.
@@ -155,19 +156,19 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     filterBand3R.prepare(spec);
 
 
-    filterBand4L.reset();
-    auto& lowFilter4L = filterBand4L.get<0>();
-    auto& highFilter4L = filterBand4L.get<1>();
-    lowFilter4L.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq4Low);
-    highFilter4L.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq4High);
-    filterBand4L.prepare(spec);
+    //filterBand4L.reset();
+    //auto& lowFilter4L = filterBand4L.get<0>();
+    //auto& highFilter4L = filterBand4L.get<1>();
+    //lowFilter4L.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq4Low);
+    //highFilter4L.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq4High);
+    //filterBand4L.prepare(spec);
 
-    filterBand4R.reset();
-    auto& lowFilter4R = filterBand4R.get<0>();
-    auto& highFilter4R = filterBand4R.get<1>();
-    lowFilter4R.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq4Low);
-    highFilter4R.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq4High);
-    filterBand4R.prepare(spec);
+    //filterBand4R.reset();
+    //auto& lowFilter4R = filterBand4R.get<0>();
+    //auto& highFilter4R = filterBand4R.get<1>();
+    //lowFilter4R.state = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq4Low);
+    //highFilter4R.state = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, freq4High);
+    //filterBand4R.prepare(spec);
 
 
     filterBand5L.reset();
@@ -206,7 +207,7 @@ void MainComponent::initializeFrequencies() {
     freq2Low = 400.0f;
     freq2High = 1000.0f;
     freq3Low = 1000.0f;
-    freq3High = 1500.0f;
+    freq3High = 4000.0f;
     freq4Low = 1500.0f;
     freq4High = 4000.0f;
     freq5Low = 4000.0f;
@@ -214,8 +215,40 @@ void MainComponent::initializeFrequencies() {
     freq6Low = 10000.0f;
 }
 
+void MainComponent::updateParameters() {
+    auto newValue1 = slider1.getValue();
+    auto newValue2 = slider2.getValue();
+    auto newValue3 = slider3.getValue();
+    auto newValue4 = slider4.getValue();
+
+    auto& gain1L = filterBand1L.get<2>();
+    auto& gain1R = filterBand1R.get<2>();
+
+    gain1L.setGainDecibels(newValue1/10);
+    gain1R.setGainDecibels(newValue1/10);
+
+    auto& gain2L = filterBand2L.get<2>();
+    auto& gain2R = filterBand2R.get<2>();
+
+    gain2L.setGainDecibels(newValue2);
+    gain2R.setGainDecibels(newValue2);
+
+    auto& gain3L = filterBand3L.get<2>();
+    auto& gain3R = filterBand3R.get<2>();
+
+    gain3L.setGainDecibels(newValue3);
+    gain3R.setGainDecibels(newValue3);
+
+    auto& gain4L = filterBand5L.get<2>();
+    auto& gain4R = filterBand5R.get<2>();
+
+    gain4L.setGainDecibels(newValue4);
+    gain4R.setGainDecibels(newValue4);
+}
+
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
+    updateParameters();
     auto* device = deviceManager.getCurrentAudioDevice();
     auto activeInputChannels = device->getActiveInputChannels();
     auto activeOutputChannels = device->getActiveOutputChannels();
@@ -237,9 +270,9 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     buffer3.makeCopyOf(*buffer);
     juce::dsp::AudioBlock<float> block3(buffer3);
 
-    juce::AudioBuffer<float> buffer4;
-    buffer4.makeCopyOf(*buffer);
-    juce::dsp::AudioBlock<float> block4(buffer4);
+    //juce::AudioBuffer<float> buffer4;
+    //buffer4.makeCopyOf(*buffer);
+    //juce::dsp::AudioBlock<float> block4(buffer4);
 
     juce::AudioBuffer<float> buffer5;
     buffer5.makeCopyOf(*buffer);
@@ -273,7 +306,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                 juce::dsp::ProcessContextReplacing<float>pc1(block1.getSingleChannelBlock(channel));
                 juce::dsp::ProcessContextReplacing<float>pc2(block2.getSingleChannelBlock(channel));
                 juce::dsp::ProcessContextReplacing<float>pc3(block3.getSingleChannelBlock(channel));
-                juce::dsp::ProcessContextReplacing<float>pc4(block4.getSingleChannelBlock(channel));
+                //juce::dsp::ProcessContextReplacing<float>pc4(block4.getSingleChannelBlock(channel));
                 juce::dsp::ProcessContextReplacing<float>pc5(block5.getSingleChannelBlock(channel));
                 juce::dsp::ProcessContextReplacing<float>pc6(block6.getSingleChannelBlock(channel));
 
@@ -281,7 +314,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                     filterBand1L.process(pc1);
                     filterBand2L.process(pc2);
                     filterBand3L.process(pc3);
-                    filterBand4L.process(pc4);
+                    //filterBand4L.process(pc4);
                     filterBand5L.process(pc5);
                     filterBand6L.process(pc6);
                 }
@@ -289,14 +322,14 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
                     filterBand1R.process(pc1);
                     filterBand2R.process(pc2);
                     filterBand3R.process(pc3);
-                    filterBand4R.process(pc4);
+                    //filterBand4R.process(pc4);
                     filterBand5R.process(pc5);
                     filterBand6R.process(pc6);
                 }
                 buffer->addFrom(channel, 0, buffer1, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer2, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer3, channel, 0, bufferToFill.numSamples, 1.0f);
-                buffer->addFrom(channel, 0, buffer4, channel, 0, bufferToFill.numSamples, 1.0f);
+                //buffer->addFrom(channel, 0, buffer4, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer5, channel, 0, bufferToFill.numSamples, 1.0f);
                 buffer->addFrom(channel, 0, buffer6, channel, 0, bufferToFill.numSamples, 1.0f);
 

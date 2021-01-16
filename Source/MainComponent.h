@@ -27,6 +27,7 @@ public:
     void resized() override;
 
     void initializeFrequencies();
+    void updateParameters();
 
 private:
     //==============================================================================
@@ -67,8 +68,8 @@ private:
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3L;
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand3R;
 
-    juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4L;
-    juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4R;
+    //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4L;
+    //juce::dsp::ProcessorChain<HLFilter, HLFilter> filterBand4R;
 
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5L;
     juce::dsp::ProcessorChain<HLFilter, HLFilter, GainProcessor> filterBand5R;
@@ -82,6 +83,9 @@ private:
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
+
+private:
+    juce::AudioDeviceSelectorComponent audioSetupComp;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
