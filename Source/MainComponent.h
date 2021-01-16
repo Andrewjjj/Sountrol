@@ -26,12 +26,12 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-    //float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
-    //    freq4Low, freq4High, freq5Low, freq5High, freq6Low;
+    float freq1Low, freq1High, freq2Low, freq2High, freq3Low, freq3High,
+        freq4Low, freq4High, freq5Low, freq5High, freq6Low;
 
-    //using GainProcessor = juce::dsp::Gain<float>;
+    using GainProcessor = juce::dsp::Gain<float>;
     //
-    //juce::dsp::ProcessorChain<GainProcessor> filterBand1;
+    juce::dsp::ProcessorChain<GainProcessor> filterBand1;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
