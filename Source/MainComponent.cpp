@@ -77,7 +77,7 @@ MainComponent::MainComponent()
     };
 
     addAndMakeVisible(btnSettings);
-    //btnSettings.onClick = [this] { showSettingsWindow(); };
+    btnSettings.onClick = [this] { showSettingsWindow(); };
 
     addAndMakeVisible(btnResetAll);
 

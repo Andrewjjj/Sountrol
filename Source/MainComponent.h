@@ -2,28 +2,31 @@
 
 #include <JuceHeader.h>
 
-//class SettingsWindow : public juce::DocumentWindow, juce::AudioAppComponent
-//{ 
-//public:
-//    SettingsWindow(const juce::String name)
-//        : DocumentWindow(name,
-//            juce::Desktop::getInstance().getDefaultLookAndFeel()
-//            .findColour(juce::ResizableWindow::backgroundColourId),
-//            DocumentWindow::allButtons), audioSetupComp(deviceManager, 0, 256, 0, 256, false, false, false, false)
-//    {
-//        setBounds(20, 20, 300, 400);
-//        setResizable(true, false);
-//        setUsingNativeTitleBar(true);
-//    }
-//
-//    void closeButtonPressed() {
-//        setVisible(false);
-//    }
-//
-//private:
-//    juce::AudioDeviceSelectorComponent audioSetupComp;
-//    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
-//};
+class SettingsWindow : public juce::DocumentWindow
+{ 
+public:
+    SettingsWindow(const juce::String name, juce::AudioDeviceSelectorComponent* audioSetupComp)
+        : DocumentWindow(name,
+            juce::Desktop::getInstance().getDefaultLookAndFeel()
+            .findColour(juce::ResizableWindow::backgroundColourId),
+            DocumentWindow::allButtons)
+    {
+        setContentNonOwned(audioSetupComp, false);
+        audioSetupComp->setBounds(0, 0, 400, 200);
+
+        setDraggable(false);
+        setBounds(50, 50, 500, 400);
+        setResizable(true, false);
+        setUsingNativeTitleBar(true);
+    }
+
+    void closeButtonPressed() {
+        setVisible(false);
+    }
+
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
+};
 
 //==============================================================================
 /*
@@ -125,6 +128,17 @@ private:
 
 private:
     juce::AudioDeviceSelectorComponent audioSetupComp;
+
+    std::unique_ptr<SettingsWindow> window;
+
+    void showSettingsWindow()
+    {
+        if (window == nullptr)
+        {
+            window.reset(new SettingsWindow("Window", &audioSetupComp));
+        }
+        window->setVisible(true);
+    }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
