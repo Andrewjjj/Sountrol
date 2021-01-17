@@ -57,11 +57,11 @@ class LPWComponent : public juce::Component
 public:
     LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback) : vecPtr(vec), cb(callback)
     {
-        btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
-        btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
-        btnPreset3.setRadioGroupId(1, juce::dontSendNotification);
-        btnPreset4.setRadioGroupId(1, juce::dontSendNotification);
-        btnPreset5.setRadioGroupId(1, juce::dontSendNotification);
+        //btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
+        //btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
+        //btnPreset3.setRadioGroupId(1, juce::dontSendNotification);
+        //btnPreset4.setRadioGroupId(1, juce::dontSendNotification);
+        //btnPreset5.setRadioGroupId(1, juce::dontSendNotification);
 
         addAndMakeVisible(btnPreset1);
         addAndMakeVisible(btnPreset2);
@@ -69,11 +69,11 @@ public:
         addAndMakeVisible(btnPreset4);
         addAndMakeVisible(btnPreset5);
 
-        btnPreset1.setClickingTogglesState(true);
-        btnPreset2.setClickingTogglesState(true);
-        btnPreset3.setClickingTogglesState(true);
-        btnPreset4.setClickingTogglesState(true);
-        btnPreset5.setClickingTogglesState(true);
+        //btnPreset1.setClickingTogglesState(true);
+        //btnPreset2.setClickingTogglesState(true);
+        //btnPreset3.setClickingTogglesState(true);
+        //btnPreset4.setClickingTogglesState(true);
+        //btnPreset5.setClickingTogglesState(true);
 
         btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
         btnPreset1.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
