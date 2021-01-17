@@ -54,7 +54,7 @@ public:
             DocumentWindow::allButtons)
     {
         setDraggable(false);
-        setBounds(getWidth(), getHeight(), 400, 400);
+        setBounds(getWidth(), getHeight(), 200, 50);
         setResizable(true, false);
         setUsingNativeTitleBar(true);
     }
@@ -82,10 +82,12 @@ public:
 
     void resized() override
     {
-        txtPresetName.setBounds(0, 0, 100, 100);
-        btnSave.setBounds(0, 100, 50, 50);
-        btnCancel.setBounds(100, 100, 50, 50);
+        txtPresetName.setBounds(0, 0, 200, 25);
+        btnSave.setBounds(0, 25, 100, 25);
+        btnCancel.setBounds(100, 25, 100, 25);
     }
+
+
 
 private:
     juce::TextEditor txtPresetName;
@@ -105,23 +107,17 @@ public:
             DocumentWindow::allButtons)
     {
         setDraggable(false);
-        setBounds(getWidth(), getHeight(), 400, 400);
-        setResizable(true, false);
+        setBounds(getWidth(), getHeight(), 200, 50);
+        setResizable(false, false);
         setUsingNativeTitleBar(true);
 
         setContentOwned(&spwComponent, false);
-        //setContentNonOwned(editorName, false);
-        //setContentNonOwned(saveBtn, false);
-        //setContentNonOwned(closeBtn, false);
-
-        //editorName->setBounds(0, 0, 50, 20);
-        //saveBtn->setBounds(0, 100, 50, 20);
-        //closeBtn->setBounds(100, 100, 50, 20);
     }
 
     void closeButtonPressed() {
         setVisible(false);
     }
+    
 
 private:
     SPWComponent spwComponent;
