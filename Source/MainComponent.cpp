@@ -41,7 +41,7 @@ MainComponent::MainComponent()
     lblSlider3.attachToComponent(&slider3, false);
 
     addAndMakeVisible(slider4);
-    slider4.setRange(-60.0f, 5.0f, 0.1f);
+    slider4.setRange(-30.0f, 5.0f, 0.1f);
     slider4.setValue(0.0f);
     slider4.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     slider4.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -268,8 +268,8 @@ void MainComponent::updateParameters() {
     auto& gain1L = filterBand1L.get<2>();
     auto& gain1R = filterBand1R.get<2>();
 
-    gain1L.setGainDecibels(newValue1/10);
-    gain1R.setGainDecibels(newValue1/10);
+    gain1L.setGainDecibels(newValue1/3);
+    gain1R.setGainDecibels(newValue1/3);
 
     auto& gain2L = filterBand2L.get<2>();
     auto& gain2R = filterBand2R.get<2>();
@@ -286,8 +286,17 @@ void MainComponent::updateParameters() {
     auto& gain4L = filterBand5L.get<2>();
     auto& gain4R = filterBand5R.get<2>();
 
-    gain4L.setThreshold(newValue4);
-    gain4R.setThreshold(newValue4);
+    gain4L.setThreshold(newValue4*2);
+    gain4R.setThreshold(newValue4*2);
+}
+
+void MainComponent::addPreset(juce::String name, float v1, float v2, float v3, float v4) {
+    Preset p(name, v1, v2, v3, v4);
+    presetVec.push_back(p);
+}
+
+Preset* MainComponent::loadPreset(int index) {
+    return &presetVec.at(index);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -447,6 +456,6 @@ void MainComponent::resized()
     //lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
-    btnSettings.setBounds(20, getHeight() - 100, 200, 50);
-    btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 50);
+    btnSettings.setBounds(20, getHeight() - 80, 200, 50);
+    btnResetAll.setBounds(getWidth() / 2, getHeight() - 80, 200, 50);
 }

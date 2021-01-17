@@ -2,6 +2,22 @@
 
 #include <JuceHeader.h>
 
+
+struct Preset {
+    juce::String name;
+    float v1;
+    float v2;
+    float v3;
+    float v4;
+    Preset(juce::String _name, float v_1, float v_2, float v_3, float v_4) {
+        name = _name;
+        v1 = v_1;
+        v2 = v_2;
+        v3 = v_3;
+        v4 = v_4;
+    }
+};
+
 class SettingsWindow : public juce::DocumentWindow
 { 
 public:
@@ -55,6 +71,11 @@ public:
 
     void initializeFrequencies();
     void updateParameters();
+
+    void addPreset(juce::String name, float v1, float v2, float v3, float v4);
+    Preset loadPreset(int index);
+
+
 
 private:
     //==============================================================================
@@ -114,7 +135,6 @@ private:
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
 
-    bool btnOn = true;
 
 private:
     juce::AudioDeviceSelectorComponent audioSetupComp;
@@ -130,6 +150,16 @@ private:
         window->setVisible(true);
     }
 
+private:
+    
+    juce::Array<Preset> presetVec;
+    
+    std::vector<Preset> presetVec = {
+        {"Typical Use", -2.0f, -30.0f, -2.0f, 0.0f },
+        {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f }
+    };
+
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
-
