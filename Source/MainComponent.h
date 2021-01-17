@@ -55,7 +55,7 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
+    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback) : cb(callback)
     {
         btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
         btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
@@ -106,6 +106,8 @@ public:
     
 
 private:
+    std::function<void(float, float, float, float)> cb;
+
     std::vector<Preset>* vecPtr;
 
     juce::Label lblPreset{ {}, "Please Choose Your Preset" };
@@ -115,8 +117,9 @@ private:
         btnPreset4{ vecPtr->at(3).name },
         btnPreset5{ vecPtr->at(4).name };
 
-    void loadPreset()
+    void loadPreset(float v1, float v2, float v3, float v4)
     {
+        cb(v1, v2, v3, v4);
         return;
     }
 
