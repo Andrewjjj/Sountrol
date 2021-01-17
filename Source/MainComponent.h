@@ -16,6 +16,14 @@ struct Preset {
         v3 = v_3;
         v4 = v_4;
     }
+
+    Preset(juce::String _name, double v_1, double v_2, double v_3, double v_4) {
+        name = _name;
+        v1 = v_1;
+        v2 = v_2;
+        v3 = v_3;
+        v4 = v_4;
+    }
 };
 
 class SettingsWindow : public juce::DocumentWindow
@@ -44,15 +52,15 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
 };
 
-class PWComponent : public juce::Component
+class LPWComponent : public juce::Component
 {
 public:
-    PWComponent()
+    LPWComponent()
     {
 
     }
 
-    ~PWComponent() {}
+    ~LPWComponent() {}
 
     void resized() override
     {
@@ -61,24 +69,24 @@ public:
 
 private:
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PWComponent);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LPWComponent);
 };
 
-class PresetWindow : public juce::DocumentWindow
+class LoadPresetWindow : public juce::DocumentWindow
 {
 public:
-    PresetWindow(const juce::String name)
+    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons)
+            DocumentWindow::allButtons), presetVec(vec)
     {
         setDraggable(false);
         setBounds(getWidth(), getHeight(), 400, 400);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
 
-        setContentOwned(&pwComponent, false);
+        setContentOwned(&lpwComponent, false);
     }
 
 
@@ -87,14 +95,17 @@ public:
     }
 
 private:
-    PWComponent pwComponent;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetWindow);
+    LPWComponent lpwComponent;
+    std::vector<Preset>* presetVec;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LoadPresetWindow);
 };
 
 class SPWComponent : public juce::Component
 {
 public:
-    SPWComponent() {
+    SPWComponent(std::vector<Preset>* vec, juce::Slider* slider1, juce::Slider* slider2, juce::Slider* slider3, juce::Slider* slider4)
+        : vecPtr(vec), slider1(slider1), slider2(slider2), slider3(slider3), slider4(slider4)
+    {
         addAndMakeVisible(txtPresetName);
         addAndMakeVisible(btnSave);
         addAndMakeVisible(btnCancel);
@@ -103,7 +114,9 @@ public:
         lblPresetName.attachToComponent(&txtPresetName, false);
 
         btnCancel.onClick = [this] {closeWindow(); };
-        btnSave.onClick = [this] {savePreset(); };
+        btnSave.onClick = [this] {
+            savePreset(); 
+        };
     }
 
     ~SPWComponent() {}
@@ -115,19 +128,28 @@ public:
         btnCancel.setBounds(getWidth() / 2 + 5, 100, 100, 30);
     }
 
-
-
-private:
     void closeWindow()
     {
         return;
     }
-    
+
     void savePreset()
     {
+        DBG("11");
+        Preset ps(lblPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
+
+        vecPtr->push_back(ps);
         return;
     }
 
+private:
+    std::vector<Preset>* vecPtr;
+
+    juce::Slider* slider1;
+    juce::Slider* slider2;
+    juce::Slider* slider3;
+    juce::Slider* slider4;
+    
     juce::Label lblPresetName;
     juce::TextEditor txtPresetName;
     juce::TextButton btnSave{ "Save Preset" };
@@ -138,18 +160,18 @@ private:
 
 class SavePresetWindow : public juce::DocumentWindow
 {
+
 public:
-    SavePresetWindow(const juce::String name)
+    SavePresetWindow(const juce::String name, std::vector<Preset> *vec, juce::Slider* slider1, juce::Slider* slider2, juce::Slider* slider3, juce::Slider* slider4)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons)
+            DocumentWindow::allButtons), spwComponent(vec, slider1, slider2, slider3, slider4)
     {
         setDraggable(false);
         setBounds(getWidth(), getHeight(), 300, 150);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
-
         setContentOwned(&spwComponent, false);
     }
 
@@ -160,6 +182,7 @@ public:
 
 private:
     SPWComponent spwComponent;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SavePresetWindow);
 };
@@ -279,12 +302,12 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wPreset == nullptr) wPreset.reset(new PresetWindow("Presets"));
+            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec));
             wPreset->setVisible(true);
         }
         else if (windowType == 2)
         {
-            if (wSavePreset == nullptr) wSavePreset.reset(new SavePresetWindow("Save Preset"));
+            if (wSavePreset == nullptr) wSavePreset.reset(new SavePresetWindow("Save Preset", &presetVec, &slider1, &slider2, &slider3, &slider4));
             wSavePreset->setVisible(true);
         }
     }

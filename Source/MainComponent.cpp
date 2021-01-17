@@ -77,6 +77,9 @@ MainComponent::MainComponent()
     btnOnOff;
     btnOnOff.setClickingTogglesState(true);
     btnOnOff.onClick = [this] {
+        for (auto i : presetVec) {
+            DBG(i.name + " " + std::to_string(i.v1));
+        }
         updateOnOffState(&btnOnOff);
     };
 
