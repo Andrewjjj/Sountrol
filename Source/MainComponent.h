@@ -55,7 +55,7 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent(std::vector<Preset>* vec, std::function<void()> callback)
+    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
     {
 
     }
@@ -76,7 +76,7 @@ private:
 class LoadPresetWindow : public juce::DocumentWindow
 {
 public:
-    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void()> callback)
+    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
@@ -88,7 +88,6 @@ public:
         setUsingNativeTitleBar(true);
         setContentOwned(&lpwComponent, false);
     }
-
 
     void closeButtonPressed() {
         setVisible(false);
