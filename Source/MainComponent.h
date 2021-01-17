@@ -72,7 +72,7 @@ private:
 class SavePresetWindow : public juce::DocumentWindow
 {
 public:
-    SavePresetWindow(const juce::String name, std::vector<Preset> &presetVec, juce::TextEditor* editorName, juce::TextButton* saveBtn, juce::TextButton* closeBtn)
+    SavePresetWindow(const juce::String name)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
@@ -83,13 +83,13 @@ public:
         setResizable(true, false);
         setUsingNativeTitleBar(true);
 
-        setContentNonOwned(editorName, false);
-        setContentNonOwned(saveBtn, false);
-        setContentNonOwned(closeBtn, false);
+        //setContentNonOwned(editorName, false);
+        //setContentNonOwned(saveBtn, false);
+        //setContentNonOwned(closeBtn, false);
 
-        editorName->setBounds(0, 0, 50, 20);
-        saveBtn->setBounds(0, 100, 50, 20);
-        closeBtn->setBounds(100, 100, 50, 20);
+        //editorName->setBounds(0, 0, 50, 20);
+        //saveBtn->setBounds(0, 100, 50, 20);
+        //closeBtn->setBounds(100, 100, 50, 20);
     }
 
     void closeButtonPressed() {
@@ -132,7 +132,7 @@ public:
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
     Preset loadPreset(int index);
 
-    void MainComponent::showSavePresetWindow();
+    //void MainComponent::showSavePresetWindow();
 
 private:
     //==============================================================================

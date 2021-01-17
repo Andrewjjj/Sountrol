@@ -92,8 +92,8 @@ MainComponent::MainComponent()
 
     addAndMakeVisible(btnSavePreset);
     btnSavePreset.onClick = [this] {
-        showSavePresetWindow();
-        //showWindow(2); 
+        //showSavePresetWindow();
+        showWindow(2); 
     };
 
 
@@ -310,25 +310,25 @@ Preset MainComponent::loadPreset(int index) {
     return presetVec.at(index);
 }
 
-void MainComponent::showSavePresetWindow() 
-{
-    auto* savePresetWindow = new SavePresetWindow("Save Preset", presetVec, &savePresetName, &savePresetSaveBtn, &savePresetCloseBtn);
-    windows.add(savePresetWindow);
-
-    juce::Rectangle<int> area(0, 0, 400, 300);
-
-    juce::RectanglePlacement placement(
-        (juce::RectanglePlacement::xLeft | juce::RectanglePlacement::yTop | juce::RectanglePlacement::doNotResize)
-        );
-
-    //auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
-    //    .getPrimaryDisplay()->userArea.reduced(20));
-    savePresetWindow->setBounds(area);
-    savePresetWindow->setResizable(false);
-    savePresetWindow->setUsingNativeTitleBar(true);
-    savePresetWindow->setVisible(true);
-
-}
+//void MainComponent::showSavePresetWindow() 
+//{
+//    auto* savePresetWindow = new SavePresetWindow("Save Preset");
+//    windows.add(savePresetWindow);
+//
+//    juce::Rectangle<int> area(0, 0, 400, 300);
+//
+//    juce::RectanglePlacement placement(
+//        (juce::RectanglePlacement::xLeft | juce::RectanglePlacement::yTop | juce::RectanglePlacement::doNotResize)
+//        );
+//
+//    //auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
+//    //    .getPrimaryDisplay()->userArea.reduced(20));
+//    savePresetWindow->setBounds(area);
+//    savePresetWindow->setResizable(false, false);
+//    savePresetWindow->setUsingNativeTitleBar(true);
+//    savePresetWindow->setVisible(true);
+//
+//}
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
