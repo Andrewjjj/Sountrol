@@ -303,8 +303,8 @@ private:
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
-    juce::TextButton btnPresets{ "Load Presets" };
-    juce::TextButton btnSavePreset{ "Save Preset" };
+    juce::TextButton btnPresets{ "Presets" };
+    //juce::TextButton btnSavePreset{ "Save Preset" };
 
     //juce::ToggleButton lowCutBtn{ "Cut Unncessary Sounds" };
 
