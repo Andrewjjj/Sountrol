@@ -61,12 +61,38 @@ public:
 
 
     void closeButtonPressed() {
-
         setVisible(false);
     }
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetWindow);
+};
+
+class SPWComponent : public juce::Component
+{
+public:
+    SPWComponent() {
+        setSize(getWidth(), getHeight());
+        addAndMakeVisible(txtPresetName);
+        addAndMakeVisible(btnSave);
+        addAndMakeVisible(btnCancel);
+    }
+
+    ~SPWComponent() {}
+
+    void resized() override
+    {
+        txtPresetName.setBounds(0, 0, 100, 100);
+        btnSave.setBounds(0, 100, 50, 50);
+        btnCancel.setBounds(100, 100, 50, 50);
+    }
+
+private:
+    juce::TextEditor txtPresetName;
+    juce::TextButton btnSave{ "Save Preset" };
+    juce::TextButton btnCancel{ "Cancel" };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SPWComponent);
 };
 
 class SavePresetWindow : public juce::DocumentWindow
@@ -83,6 +109,7 @@ public:
         setResizable(true, false);
         setUsingNativeTitleBar(true);
 
+        setContentOwned(&spwComponent, false);
         //setContentNonOwned(editorName, false);
         //setContentNonOwned(saveBtn, false);
         //setContentNonOwned(closeBtn, false);
@@ -93,11 +120,12 @@ public:
     }
 
     void closeButtonPressed() {
-        delete this;
-        //setVisible(false);
+        setVisible(false);
     }
 
 private:
+    SPWComponent spwComponent;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SavePresetWindow);
 };
 
