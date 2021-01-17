@@ -93,11 +93,11 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnPresets);
     btnPresets.onClick = [this] {showWindow(1); };
 
-    addAndMakeVisible(btnSavePreset);
-    btnSavePreset.onClick = [this] {
-        //showSavePresetWindow();
-        showWindow(2); 
-    };
+    //addAndMakeVisible(btnSavePreset);
+    //btnSavePreset.onClick = [this] {
+    //    //showSavePresetWindow();
+    //    showWindow(2); 
+    //};
 
 
     // Some platforms require permissions to open input channels so request that here
@@ -494,7 +494,7 @@ void MainComponent::resized()
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
     btnSettings.setBounds(20, getHeight() - 100, 200, 40);
-    btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 40);
-    btnPresets.setBounds(getWidth() / 2, getHeight() - 50, 200, 40);
-    btnSavePreset.setBounds(20, getHeight() - 50, 200, 40);
+    btnResetAll.setBounds(20, getHeight() - 50, 405, 40);
+    btnPresets.setBounds(getWidth() / 2, getHeight() - 100, 200, 40);
+    //btnSavePreset.setBounds(20, getHeight() - 50, 200, 40);
 }
