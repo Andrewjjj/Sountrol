@@ -44,6 +44,26 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
 };
 
+class PWComponent : public juce::Component
+{
+public:
+    PWComponent()
+    {
+
+    }
+
+    ~PWComponent() {}
+
+    void resized() override
+    {
+
+    }
+
+private:
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PWComponent);
+};
+
 class PresetWindow : public juce::DocumentWindow
 {
 public:
@@ -55,8 +75,10 @@ public:
     {
         setDraggable(false);
         setBounds(getWidth(), getHeight(), 400, 400);
-        setResizable(true, false);
+        setResizable(false, false);
         setUsingNativeTitleBar(true);
+
+        setContentOwned(&pwComponent, false);
     }
 
 
@@ -65,6 +87,7 @@ public:
     }
 
 private:
+    PWComponent pwComponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetWindow);
 };
 
@@ -72,22 +95,38 @@ class SPWComponent : public juce::Component
 {
 public:
     SPWComponent() {
-        setSize(getWidth(), getHeight());
         addAndMakeVisible(txtPresetName);
         addAndMakeVisible(btnSave);
         addAndMakeVisible(btnCancel);
+        addAndMakeVisible(lblPresetName);
+        lblPresetName.setText("Please Enter Your Preset Name", juce::dontSendNotification);
+        lblPresetName.attachToComponent(&txtPresetName, false);
+
+        btnCancel.onClick = [this] {closeWindow(); };
+        btnSave.onClick = [this] {savePreset(); };
     }
 
     ~SPWComponent() {}
 
     void resized() override
     {
-        txtPresetName.setBounds(0, 0, 100, 100);
-        btnSave.setBounds(0, 100, 50, 50);
-        btnCancel.setBounds(100, 100, 50, 50);
+        txtPresetName.setBounds(10, 40, 280, 30);
+        btnSave.setBounds(45, 100, 100, 30);
+        btnCancel.setBounds(getWidth() / 2 + 5, 100, 100, 30);
     }
 
 private:
+    void closeWindow()
+    {
+        return;
+    }
+    
+    void savePreset()
+    {
+        return;
+    }
+
+    juce::Label lblPresetName;
     juce::TextEditor txtPresetName;
     juce::TextButton btnSave{ "Save Preset" };
     juce::TextButton btnCancel{ "Cancel" };
@@ -105,18 +144,11 @@ public:
             DocumentWindow::allButtons)
     {
         setDraggable(false);
-        setBounds(getWidth(), getHeight(), 400, 400);
-        setResizable(true, false);
+        setBounds(getWidth(), getHeight(), 300, 150);
+        setResizable(false, false);
         setUsingNativeTitleBar(true);
 
         setContentOwned(&spwComponent, false);
-        //setContentNonOwned(editorName, false);
-        //setContentNonOwned(saveBtn, false);
-        //setContentNonOwned(closeBtn, false);
-
-        //editorName->setBounds(0, 0, 50, 20);
-        //saveBtn->setBounds(0, 100, 50, 20);
-        //closeBtn->setBounds(100, 100, 50, 20);
     }
 
     void closeButtonPressed() {
