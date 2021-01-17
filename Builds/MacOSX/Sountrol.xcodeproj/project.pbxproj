@@ -69,10 +69,6 @@
 			isa = PBXBuildFile;
 			fileRef = C9F6A11ACB72E91FD3C54B42;
 		};
-		6F8771CCE568E868202ADBC8 = {
-			isa = PBXBuildFile;
-			fileRef = 64A148E201CB1134CB1B042E;
-		};
 		9580C9BCC9AD1C7595F76040 = {
 			isa = PBXBuildFile;
 			fileRef = 0813B51867A5D450CC16EFF2;
@@ -126,13 +122,6 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_basics.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_basics.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
-		0A7F08E0FFDADCB17F961622 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.jpeg;
-			name = icon.JPG;
-			path = ../../icon.JPG;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0EABCC39714C703C3269DEA3 = {
@@ -261,13 +250,6 @@
 			path = ../../Source/MainComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		64A148E201CB1134CB1B042E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = BinaryData.cpp;
-			path = ../../JuceLibraryCode/BinaryData.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		67AEF1F49784E1958E4C4FB3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -373,13 +355,6 @@
 			path = "~/JUCE/modules/juce_data_structures";
 			sourceTree = "<absolute>";
 		};
-		BC67F0E032F3CF6830A7DAF7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = BinaryData.h;
-			path = ../../JuceLibraryCode/BinaryData.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		BF1388EB10F147C07815044E = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.nib;
@@ -457,7 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				E4E965392F2173414981CB65,
-				0A7F08E0FFDADCB17F961622,
 			);
 			name = Sountrol;
 			sourceTree = "<group>";
@@ -484,8 +458,6 @@
 		9CA7288985463C26BF99B058 = {
 			isa = PBXGroup;
 			children = (
-				64A148E201CB1134CB1B042E,
-				BC67F0E032F3CF6830A7DAF7,
 				0813B51867A5D450CC16EFF2,
 				38C22323A07E98EE250D4123,
 				343E5D005B97D46D816F4CC4,
@@ -814,7 +786,6 @@
 			files = (
 				D10F299DA6DC1954017C66A8,
 				B427C24C6E0E938282B64ABB,
-				6F8771CCE568E868202ADBC8,
 				9580C9BCC9AD1C7595F76040,
 				BDE76B36347963C5FD981F8C,
 				F808B5E2710FC80A21F3BB68,
