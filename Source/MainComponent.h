@@ -93,8 +93,8 @@ public:
     }
 
     void closeButtonPressed() {
-        delete this;
-        //setVisible(false);
+        //delete this;
+        setVisible(false);
     }
 
 private:
