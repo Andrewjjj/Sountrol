@@ -80,11 +80,19 @@ MainComponent::MainComponent()
         updateOnOffState(&btnOnOff);
     };
 
-    addAndMakeVisible(btnSettings);
-    btnSettings.onClick = [this] { showSettingsWindow(); };
-
     addAndMakeVisible(btnResetAll);
     btnResetAll.onClick = [this] {resetSliders(0); };
+
+    // windows
+    addAndMakeVisible(btnSettings);
+    btnSettings.onClick = [this] { showWindow(0); };
+
+    addAndMakeVisible(btnPresets);
+    btnPresets.onClick = [this] {showWindow(1); };
+
+    addAndMakeVisible(btnSavePreset);
+    btnSavePreset.onClick = [this] {showWindow(2); };
+
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -449,4 +457,6 @@ void MainComponent::resized()
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
     btnSettings.setBounds(20, getHeight() - 100, 200, 50);
     btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 50);
+    btnPresets.setBounds(getWidth() / 2, getHeight() - 50, 200, 50);
+    btnSavePreset.setBounds(20, getHeight() - 50, 200, 50);
 }

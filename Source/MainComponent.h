@@ -28,6 +28,46 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsWindow);
 };
 
+class PresetWindow : public juce::DocumentWindow
+{
+public:
+    PresetWindow(const juce::String name)
+        : DocumentWindow(name,
+            juce::Desktop::getInstance().getDefaultLookAndFeel()
+            .findColour(juce::ResizableWindow::backgroundColourId),
+            DocumentWindow::allButtons)
+    {
+        setDraggable(false);
+        setBounds(getWidth(), getHeight(), 400, 400);
+        setResizable(true, false);
+        setUsingNativeTitleBar(true);
+    }
+
+    void closeButtonPressed() {
+        setVisible(false);
+    }
+};
+
+class SavePresetWindow : public juce::DocumentWindow
+{
+public:
+    SavePresetWindow(const juce::String name)
+        : DocumentWindow(name,
+            juce::Desktop::getInstance().getDefaultLookAndFeel()
+            .findColour(juce::ResizableWindow::backgroundColourId),
+            DocumentWindow::allButtons)
+    {
+        setDraggable(false);
+        setBounds(getWidth(), getHeight(), 400, 400);
+        setResizable(true, false);
+        setUsingNativeTitleBar(true);
+    }
+
+    void closeButtonPressed() {
+        setVisible(false);
+    }
+};
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -113,21 +153,36 @@ private:
     juce::TextButton btnOnOff{ "Sountrol On" };
     juce::TextButton btnSettings{ "Sound Settings" };
     juce::TextButton btnResetAll{ "Reset All" };
+    juce::TextButton btnPresets{ "Load Presets" };
+    juce::TextButton btnSavePreset{ "Save Preset" };
 
     bool btnOn = true;
 
 private:
     juce::AudioDeviceSelectorComponent audioSetupComp;
 
-    std::unique_ptr<SettingsWindow> window;
+    std::unique_ptr<SettingsWindow> wSettings;
+    std::unique_ptr<PresetWindow> wPreset;
+    std::unique_ptr<SavePresetWindow> wSavePreset;
 
-    void showSettingsWindow()
+    // 0:settings, 1:Preset, 2: Save Preset
+    void showWindow(int windowType)
     {
-        if (window == nullptr)
+        if (windowType == 0 && wSettings == nullptr)
         {
-            window.reset(new SettingsWindow("Sound Settings", &audioSetupComp));
+            wSettings.reset(new SettingsWindow("Sound Settings", &audioSetupComp));
+            wSettings->setVisible(true);
         }
-        window->setVisible(true);
+        else if (windowType == 1 && wPreset == nullptr)
+        {
+            wPreset.reset(new PresetWindow("Presets"));
+            wPreset->setVisible(true);
+        }
+        else if (windowType == 2 && wSavePreset == nullptr)
+        {
+            wSavePreset.reset(new SavePresetWindow("Save Preset"));
+            wSavePreset->setVisible(true);
+        }
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
