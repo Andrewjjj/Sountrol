@@ -39,7 +39,7 @@ public:
         audioSetupComp->setBounds(0, 0, 400, 200);
 
         setDraggable(false);
-        setBounds(getWidth(), getHeight(), 500, 300);
+        setBounds(getWidth() + 100, getHeight() + 380, 500, 300);
         setResizable(true, false);
         setUsingNativeTitleBar(true);
     }
@@ -57,51 +57,39 @@ class LPWComponent : public juce::Component
 public:
     LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback) : vecPtr(vec), cb(callback)
     {
-        //btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
-        //btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
-        //btnPreset3.setRadioGroupId(1, juce::dontSendNotification);
-        //btnPreset4.setRadioGroupId(1, juce::dontSendNotification);
-        //btnPreset5.setRadioGroupId(1, juce::dontSendNotification);
-
         addAndMakeVisible(btnPreset1);
         addAndMakeVisible(btnPreset2);
         addAndMakeVisible(btnPreset3);
         addAndMakeVisible(btnPreset4);
         addAndMakeVisible(btnPreset5);
 
-        //btnPreset1.setClickingTogglesState(true);
-        //btnPreset2.setClickingTogglesState(true);
-        //btnPreset3.setClickingTogglesState(true);
-        //btnPreset4.setClickingTogglesState(true);
-        //btnPreset5.setClickingTogglesState(true);
-
-        btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset1.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset2.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset3.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset4.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset5.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
 
-        btnPreset1.onClick = [this] {loadPreset(vecPtr->at(0).v1, vecPtr->at(0).v2, vecPtr->at(0).v3, vecPtr->at(0).v4); };
-        btnPreset2.onClick = [this] {loadPreset(vecPtr->at(1).v1, vecPtr->at(1).v2, vecPtr->at(1).v3, vecPtr->at(1).v4); };
-        btnPreset3.onClick = [this] {loadPreset(vecPtr->at(2).v1, vecPtr->at(2).v2, vecPtr->at(2).v3, vecPtr->at(2).v4); };
-        btnPreset4.onClick = [this] {loadPreset(vecPtr->at(3).v1, vecPtr->at(3).v2, vecPtr->at(3).v3, vecPtr->at(3).v4); };
-        btnPreset5.onClick = [this] {loadPreset(vecPtr->at(4).v1, vecPtr->at(4).v2, vecPtr->at(4).v3, vecPtr->at(4).v4); };
+        btnPreset1.onClick = [this] {loadPreset(vecPtr->at(0).v1, vecPtr->at(0).v2, vecPtr->at(0).v3, vecPtr->at(0).v4); closeWindow(); };
+        btnPreset2.onClick = [this] {loadPreset(vecPtr->at(1).v1, vecPtr->at(1).v2, vecPtr->at(1).v3, vecPtr->at(1).v4); closeWindow(); };
+        btnPreset3.onClick = [this] {loadPreset(vecPtr->at(2).v1, vecPtr->at(2).v2, vecPtr->at(2).v3, vecPtr->at(2).v4); closeWindow(); };
+        btnPreset4.onClick = [this] {loadPreset(vecPtr->at(3).v1, vecPtr->at(3).v2, vecPtr->at(3).v3, vecPtr->at(3).v4); closeWindow(); };
+        btnPreset5.onClick = [this] {loadPreset(vecPtr->at(4).v1, vecPtr->at(4).v2, vecPtr->at(4).v3, vecPtr->at(4).v4); closeWindow(); };
     }
 
     ~LPWComponent() {}
 
     void resized() override
     {
-        btnPreset1.setBounds(0, 0, 300, 50);
-        btnPreset2.setBounds(0, 60, 300, 50);
-        btnPreset3.setBounds(0, 120, 300, 50);
-        btnPreset4.setBounds(0, 180, 300, 50);
-        btnPreset5.setBounds(0, 240, 300, 50);
+        btnPreset1.setBounds(10, 10, 280, 40);
+        btnPreset2.setBounds(10, 55, 280, 40);
+        btnPreset3.setBounds(10, 100, 280, 40);
+        btnPreset4.setBounds(10, 145, 280, 40);
+        btnPreset5.setBounds(10, 190, 280, 40);
     }
     
 
@@ -116,6 +104,12 @@ private:
         btnPreset3{ vecPtr->at(2).name },
         btnPreset4{ vecPtr->at(3).name },
         btnPreset5{ vecPtr->at(4).name };
+
+    void closeWindow()
+    {
+        Component::getParentComponent()->setVisible(false);
+        return;
+    }
 
     void loadPreset(float v1, float v2, float v3, float v4)
     {
@@ -135,11 +129,12 @@ public:
             .findColour(juce::ResizableWindow::backgroundColourId),
             DocumentWindow::allButtons), presetVec(vec), lpwComponent(vec, callback)
     {
-        setDraggable(false);
-        setBounds(getWidth(), getHeight(), 300, 300);
+        setDraggable(true);
+        setBounds(getWidth() + 300, getHeight() + 100, 300, 240);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
         setContentOwned(&lpwComponent, false);
+        setContentComponent(&lpwComponent);
     }
 
     void closeButtonPressed() {
@@ -370,11 +365,11 @@ private:
 
 private:
     std::vector<Preset> presetVec = {
-        {"Typical Use", -2.0f, -30.0f, -2.0f, 0.0f },
-        {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f },
-        {"Boxy", 0.0f, 5.0f, 0.0f, 0.0f},
-        {"MAX", 5.0f, 5.0f, 5.0f, 5.0f},
-        {"MIN", -30.0f, -30.0f, -30.0f, -30.0f}
+        {"General", -2.0f, -10.0f, -2.0f, 0.0f },
+        {"General - Enhanced", -0.0f, -25.0f, -2.0f, -20.0f },
+        {"Reduce Boom", -25.0f, -5.0f, 0.0f, 0.0f},
+        {"Reduce Sharpness", 0.0f, 0.0f, -6.5f, -7.0f},
+        {"Reduce Boxiness", -15.0f, -27.0f, 0.0f, 0.0f}
     };
 
 
@@ -382,7 +377,6 @@ private:
     juce::TextEditor savePresetName;
     juce::TextButton savePresetSaveBtn{ "Save" };
     juce::TextButton savePresetCloseBtn{ "Close" };
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
