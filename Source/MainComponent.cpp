@@ -63,7 +63,6 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnBypassSlider3);
     addAndMakeVisible(btnBypassSlider4);
 
-    addAndMakeVisible(lowCutBtn);
     
 
 
@@ -71,6 +70,8 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnOnOff);
     btnOnOff.setColour(0x1000100, juce::Colours::forestgreen);
     btnOnOff.setColour(0x1000101, juce::Colours::indianred);
+    //btnOnOff.setSize()
+    btnOnOff;
     btnOnOff.setClickingTogglesState(true);
     btnOnOff.onClick = [this] {
         updateOnOffState(&btnOnOff); 
@@ -411,7 +412,7 @@ void MainComponent::resized()
     btnBypassSlider3.setBounds(getWidth() / 2 - 10, getHeight() / 2 + 60, 80, 80);
     btnBypassSlider4.setBounds(getWidth() / 2 + 90, getHeight() / 2 + 60, 80, 80);
 
-    lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
+    //lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
     btnSettings.setBounds(20, getHeight() - 100, 180, 50);

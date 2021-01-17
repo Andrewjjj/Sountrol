@@ -88,7 +88,7 @@ private:
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
 
-    juce::ToggleButton lowCutBtn{ "Cut Unncessary Sounds" };
+    //juce::ToggleButton lowCutBtn{ "Cut Unncessary Sounds" };
 
 
 private:
