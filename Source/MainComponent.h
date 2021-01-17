@@ -55,7 +55,7 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback) : cb(callback)
+    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback) : vecPtr(vec), cb(callback)
     {
         btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
         btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
@@ -86,11 +86,11 @@ public:
         btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
         btnPreset5.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
 
-        btnPreset1.onClick = [this] {loadPreset(); };
-        btnPreset2.onClick = [this] {loadPreset(); };
-        btnPreset3.onClick = [this] {loadPreset(); };
-        btnPreset4.onClick = [this] {loadPreset(); };
-        btnPreset5.onClick = [this] {loadPreset(); };
+        btnPreset1.onClick = [this] {loadPreset(vecPtr->at(0).v1, vecPtr->at(0).v2, vecPtr->at(0).v3, vecPtr->at(0).v4); };
+        btnPreset2.onClick = [this] {loadPreset(vecPtr->at(1).v1, vecPtr->at(1).v2, vecPtr->at(1).v3, vecPtr->at(1).v4); };
+        btnPreset3.onClick = [this] {loadPreset(vecPtr->at(2).v1, vecPtr->at(2).v2, vecPtr->at(2).v3, vecPtr->at(2).v4); };
+        btnPreset4.onClick = [this] {loadPreset(vecPtr->at(3).v1, vecPtr->at(3).v2, vecPtr->at(3).v3, vecPtr->at(3).v4); };
+        btnPreset5.onClick = [this] {loadPreset(vecPtr->at(4).v1, vecPtr->at(4).v2, vecPtr->at(4).v3, vecPtr->at(4).v4); };
     }
 
     ~LPWComponent() {}
