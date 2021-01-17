@@ -85,7 +85,6 @@ public:
         setBounds(getWidth(), getHeight(), 400, 400);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
-
         setContentOwned(&lpwComponent, false);
     }
 
@@ -135,8 +134,7 @@ public:
 
     void savePreset()
     {
-        DBG("11");
-        Preset ps(lblPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
+        Preset ps(txtPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
 
         vecPtr->push_back(ps);
         return;
@@ -289,7 +287,7 @@ private:
     juce::AudioDeviceSelectorComponent audioSetupComp;
 
     std::unique_ptr<SettingsWindow> wSettings;
-    std::unique_ptr<PresetWindow> wPreset;
+    std::unique_ptr<LoadPresetWindow> wPreset;
     std::unique_ptr<SavePresetWindow> wSavePreset;
 
      //0:settings, 1:Preset, 2: Save Preset
