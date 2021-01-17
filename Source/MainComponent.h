@@ -76,7 +76,7 @@ private:
 class LoadPresetWindow : public juce::DocumentWindow
 {
 public:
-    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
+    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void (float,float,float,float)> callback)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
@@ -217,6 +217,8 @@ public:
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
     void loadPreset(float v1, float v2, float v3, float v4);
 
+    //void testFunc();
+
     void MainComponent::colourAllComponent();
     //void MainComponent::showSavePresetWindow();
 
@@ -291,6 +293,8 @@ private:
     std::unique_ptr<LoadPresetWindow> wPreset;
     std::unique_ptr<SavePresetWindow> wSavePreset;
 
+    std::function<void(float, float, float, float)> loadPresetFunc;
+
      //0:settings, 1:Preset, 2: Save Preset
     void showWindow(int windowType)
     {
@@ -301,7 +305,7 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPreset));
+            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPresetFunc));
             wPreset->setVisible(true);
         }
         else if (windowType == 2)

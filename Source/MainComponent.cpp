@@ -112,6 +112,8 @@ MainComponent::MainComponent()
         // Specify the number of input and output channels that we want to open
         setAudioChannels (2, 2);
     }
+
+    loadPresetFunc = std::bind(&MainComponent::loadPreset, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 }
 
 MainComponent::~MainComponent()

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="oq9GWC" name="Sountrol" projectType="guiapp" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              cppLanguageStandard="17">
   <MAINGROUP id="U8vMqr" name="Sountrol">
     <GROUP id="{88D66F3B-A360-80B8-4DFB-96C554920D9A}" name="Source">
       <FILE id="PfUUPx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
