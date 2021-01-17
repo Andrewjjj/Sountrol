@@ -65,6 +65,8 @@ public:
         setVisible(false);
     }
 
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetWindow);
 };
 
 class SavePresetWindow : public juce::DocumentWindow
@@ -95,6 +97,8 @@ public:
         //setVisible(false);
     }
 
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SavePresetWindow);
 };
 
 //==============================================================================
@@ -202,19 +206,19 @@ private:
      //0:settings, 1:Preset, 2: Save Preset
     void showWindow(int windowType)
     {
-        if (windowType == 0 && wSettings == nullptr)
+        if (windowType == 0)
         {
-            wSettings.reset(new SettingsWindow("Sound Settings", &audioSetupComp));
+            if (wSettings == nullptr) wSettings.reset(new SettingsWindow("Sound Settings", &audioSetupComp));
             wSettings->setVisible(true);
         }
-        else if (windowType == 1 && wPreset == nullptr)
+        else if (windowType == 1)
         {
-            wPreset.reset(new PresetWindow("Presets"));
+            if (wPreset == nullptr) wPreset.reset(new PresetWindow("Presets"));
             wPreset->setVisible(true);
         }
-        else if (windowType == 2 && wSavePreset == nullptr)
+        else if (windowType == 2)
         {
-            //wSavePreset.reset(new SavePresetWindow("Save Preset", presetVec));
+            if (wSavePreset == nullptr) wSavePreset.reset(new SavePresetWindow("Save Preset"));
             wSavePreset->setVisible(true);
         }
     }
