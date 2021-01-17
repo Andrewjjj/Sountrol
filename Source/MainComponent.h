@@ -75,22 +75,33 @@ public:
         btnPreset4.setClickingTogglesState(true);
         btnPreset5.setClickingTogglesState(true);
 
-        btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset1.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        //btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset2.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        //btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset3.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        //btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset4.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        //btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        //btnPreset5.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+
+        btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset1.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset2.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset3.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset4.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-        btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::darkgrey);
         btnPreset5.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
 
-        btnPreset1.onClick = [this] {loadPreset(vecPtr->at(0).v1, vecPtr->at(0).v2, vecPtr->at(0).v3, vecPtr->at(0).v4); };
-        btnPreset2.onClick = [this] {loadPreset(vecPtr->at(1).v1, vecPtr->at(1).v2, vecPtr->at(1).v3, vecPtr->at(1).v4); };
-        btnPreset3.onClick = [this] {loadPreset(vecPtr->at(2).v1, vecPtr->at(2).v2, vecPtr->at(2).v3, vecPtr->at(2).v4); };
-        btnPreset4.onClick = [this] {loadPreset(vecPtr->at(3).v1, vecPtr->at(3).v2, vecPtr->at(3).v3, vecPtr->at(3).v4); };
-        btnPreset5.onClick = [this] {loadPreset(vecPtr->at(4).v1, vecPtr->at(4).v2, vecPtr->at(4).v3, vecPtr->at(4).v4); };
+        btnPreset1.onClick = [this] {loadPreset(vecPtr->at(0).v1, vecPtr->at(0).v2, vecPtr->at(0).v3, vecPtr->at(0).v4); closeWindow(); };
+        btnPreset2.onClick = [this] {loadPreset(vecPtr->at(1).v1, vecPtr->at(1).v2, vecPtr->at(1).v3, vecPtr->at(1).v4); closeWindow(); };
+        btnPreset3.onClick = [this] {loadPreset(vecPtr->at(2).v1, vecPtr->at(2).v2, vecPtr->at(2).v3, vecPtr->at(2).v4); closeWindow(); };
+        btnPreset4.onClick = [this] {loadPreset(vecPtr->at(3).v1, vecPtr->at(3).v2, vecPtr->at(3).v3, vecPtr->at(3).v4); closeWindow(); };
+        btnPreset5.onClick = [this] {loadPreset(vecPtr->at(4).v1, vecPtr->at(4).v2, vecPtr->at(4).v3, vecPtr->at(4).v4); closeWindow(); };
     }
 
     ~LPWComponent() {}
@@ -102,6 +113,11 @@ public:
         btnPreset3.setBounds(0, 120, 300, 50);
         btnPreset4.setBounds(0, 180, 300, 50);
         btnPreset5.setBounds(0, 240, 300, 50);
+    }
+
+    void closeWindow()
+    {
+        return;
     }
     
 
