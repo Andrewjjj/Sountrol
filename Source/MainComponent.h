@@ -15,7 +15,7 @@ public:
         audioSetupComp->setBounds(0, 0, 400, 200);
 
         setDraggable(false);
-        setBounds(50, 50, 500, 400);
+        setBounds(getWidth(), getHeight(), 500, 300);
         setResizable(true, false);
         setUsingNativeTitleBar(true);
     }
@@ -47,6 +47,7 @@ public:
 
     //==============================================================================
     void updateOnOffState(juce::Button* button);
+    void resetSliders(int sliderNumber);
 
     //==============================================================================
     void paint (juce::Graphics& g) override;
@@ -58,16 +59,6 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-
-    //std::unique_ptr<SettingsWindow> window;
-
-    //void showSettingsWindow()
-    //{
-    //    if (window == nullptr) {
-    //        window.reset(new SettingsWindow("Window"));
-    //    }
-    //    window->setVisible(true);
-    //}
 
     juce::Slider slider1;
     juce::Slider slider2;
@@ -117,7 +108,6 @@ private:
     juce::dsp::ProcessorChain<HLFilter> filterBand6L;
     juce::dsp::ProcessorChain<HLFilter> filterBand6R;
 
-
     //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
     //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
     juce::TextButton btnOnOff{ "Sountrol On" };
@@ -135,7 +125,7 @@ private:
     {
         if (window == nullptr)
         {
-            window.reset(new SettingsWindow("Window", &audioSetupComp));
+            window.reset(new SettingsWindow("Sound Settings", &audioSetupComp));
         }
         window->setVisible(true);
     }
