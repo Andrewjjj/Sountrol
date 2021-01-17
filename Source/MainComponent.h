@@ -72,10 +72,8 @@ public:
     void initializeFrequencies();
     void updateParameters();
 
-    void addPreset(juce::String name, float v1, float v2, float v3, float v4);
+    void savesPreset(juce::String name, float v1, float v2, float v3, float v4);
     Preset loadPreset(int index);
-
-
 
 private:
     //==============================================================================

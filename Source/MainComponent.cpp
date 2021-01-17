@@ -290,7 +290,7 @@ void MainComponent::updateParameters() {
     gain4R.setThreshold(newValue4*2);
 }
 
-void MainComponent::addPreset(juce::String name, float v1, float v2, float v3, float v4) {
+void MainComponent::savePreset(juce::String name, float v1, float v2, float v3, float v4) {
     Preset p(name, v1, v2, v3, v4);
     presetVec.push_back(p);
 }
