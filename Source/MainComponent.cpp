@@ -312,20 +312,19 @@ Preset MainComponent::loadPreset(int index) {
 
 void MainComponent::showSavePresetWindow() 
 {
-    auto* savePresetWindow = new SavePresetWindow("Save Preset", presetVec, savePresetName, savePresetSaveBtn, savePresetCloseBtn);
+    auto* savePresetWindow = new SavePresetWindow("Save Preset", presetVec, &savePresetName, &savePresetSaveBtn, &savePresetCloseBtn);
     windows.add(savePresetWindow);
 
-    juce::Rectangle<int> area(0, 0, 250, 200);
+    juce::Rectangle<int> area(0, 0, 400, 300);
 
     juce::RectanglePlacement placement(
         (juce::RectanglePlacement::xLeft | juce::RectanglePlacement::yTop | juce::RectanglePlacement::doNotResize)
         );
 
-    auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
-        .getPrimaryDisplay()->userArea.reduced(20));
-    savePresetWindow->setBounds(result);
-
-    savePresetWindow->setResizable(true, !true);
+    //auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
+    //    .getPrimaryDisplay()->userArea.reduced(20));
+    savePresetWindow->setBounds(area);
+    savePresetWindow->setResizable(false);
     savePresetWindow->setUsingNativeTitleBar(true);
     savePresetWindow->setVisible(true);
 
