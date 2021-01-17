@@ -355,8 +355,8 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPresetFunc));
-            wPreset->setVisible(true);
+            if (wLoadPreset == nullptr) wLoadPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPresetFunc));
+            wLoadPreset->setVisible(true);
         }
         else if (windowType == 2)
         {
