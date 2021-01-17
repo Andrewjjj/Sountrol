@@ -55,19 +55,70 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent()
+    LPWComponent(std::vector<Preset>* vec)
+        : vecPtr(vec)
     {
+        btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
+        btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
+        btnPreset3.setRadioGroupId(1, juce::dontSendNotification);
+        btnPreset4.setRadioGroupId(1, juce::dontSendNotification);
+        btnPreset5.setRadioGroupId(1, juce::dontSendNotification);
 
+        addAndMakeVisible(btnPreset1);
+        addAndMakeVisible(btnPreset2);
+        addAndMakeVisible(btnPreset3);
+        addAndMakeVisible(btnPreset4);
+        addAndMakeVisible(btnPreset5);
+
+        btnPreset1.setClickingTogglesState(true);
+        btnPreset2.setClickingTogglesState(true);
+        btnPreset3.setClickingTogglesState(true);
+        btnPreset4.setClickingTogglesState(true);
+        btnPreset5.setClickingTogglesState(true);
+
+        btnPreset1.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset1.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        btnPreset2.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset2.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        btnPreset3.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset3.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        btnPreset4.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset4.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+        btnPreset5.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+        btnPreset5.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
+
+        btnPreset1.onClick = [this] {loadPreset(); };
+        btnPreset2.onClick = [this] {loadPreset(); };
+        btnPreset3.onClick = [this] {loadPreset(); };
+        btnPreset4.onClick = [this] {loadPreset(); };
+        btnPreset5.onClick = [this] {loadPreset(); };
     }
 
     ~LPWComponent() {}
 
     void resized() override
     {
-
+        btnPreset1.setBounds(0, 0, 300, 50);
+        btnPreset2.setBounds(0, 60, 300, 50);
+        btnPreset3.setBounds(0, 120, 300, 50);
+        btnPreset4.setBounds(0, 180, 300, 50);
+        btnPreset5.setBounds(0, 240, 300, 50);
     }
 
 private:
+    std::vector<Preset>* vecPtr;
+
+    juce::Label lblPreset{ {}, "Please Choose Your Preset" };
+    juce::TextButton btnPreset1{ vecPtr->at(0).name },
+        btnPreset2{ vecPtr->at(1).name },
+        btnPreset3{ vecPtr->at(2).name },
+        btnPreset4{ vecPtr->at(3).name },
+        btnPreset5{ vecPtr->at(4).name };
+
+    void loadPreset()
+    {
+        return;
+    }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LPWComponent);
 };
@@ -79,10 +130,10 @@ public:
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons), presetVec(vec)
+            DocumentWindow::allButtons), lpwComponent(vec)
     {
         setDraggable(false);
-        setBounds(getWidth(), getHeight(), 400, 400);
+        setBounds(getWidth(), getHeight(), 300, 300);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
 
@@ -96,7 +147,6 @@ public:
 
 private:
     LPWComponent lpwComponent;
-    std::vector<Preset>* presetVec;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LoadPresetWindow);
 };
 
@@ -289,7 +339,7 @@ private:
     juce::AudioDeviceSelectorComponent audioSetupComp;
 
     std::unique_ptr<SettingsWindow> wSettings;
-    std::unique_ptr<PresetWindow> wPreset;
+    std::unique_ptr<LoadPresetWindow> wLoadPreset;
     std::unique_ptr<SavePresetWindow> wSavePreset;
 
      //0:settings, 1:Preset, 2: Save Preset
@@ -302,8 +352,8 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec));
-            wPreset->setVisible(true);
+            if (wLoadPreset == nullptr) wLoadPreset.reset(new LoadPresetWindow("Presets", &presetVec));
+            wLoadPreset->setVisible(true);
         }
         else if (windowType == 2)
         {
@@ -315,7 +365,10 @@ private:
 private:
     std::vector<Preset> presetVec = {
         {"Typical Use", -2.0f, -30.0f, -2.0f, 0.0f },
-        {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f }
+        {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f },
+        {"Boxy", 0.0f, 5.0f, 0.0f, 0.0f},
+        {"MAX", 5.0f, 5.0f, 5.0f, 5.0f},
+        {"MIN", -30.0f, -30.0f, -30.0f, -30.0f}
     };
 
 
