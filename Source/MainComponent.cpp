@@ -91,7 +91,10 @@ MainComponent::MainComponent()
     btnPresets.onClick = [this] {showWindow(1); };
 
     addAndMakeVisible(btnSavePreset);
-    btnSavePreset.onClick = [this] {showWindow(2); };
+    btnSavePreset.onClick = [this] {
+        showSavePresetWindow();
+        //showWindow(2); 
+    };
 
 
     // Some platforms require permissions to open input channels so request that here
@@ -305,6 +308,27 @@ void MainComponent::savePreset(juce::String name, float v1, float v2, float v3, 
 
 Preset MainComponent::loadPreset(int index) {
     return presetVec.at(index);
+}
+
+void MainComponent::showSavePresetWindow() 
+{
+    auto* savePresetWindow = new SavePresetWindow("Save Preset", presetVec, savePresetName, savePresetSaveBtn, savePresetCloseBtn);
+    windows.add(savePresetWindow);
+
+    juce::Rectangle<int> area(0, 0, 250, 200);
+
+    juce::RectanglePlacement placement(
+        (juce::RectanglePlacement::xLeft | juce::RectanglePlacement::yTop | juce::RectanglePlacement::doNotResize)
+        );
+
+    auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
+        .getPrimaryDisplay()->userArea.reduced(20));
+    savePresetWindow->setBounds(result);
+
+    savePresetWindow->setResizable(true, !true);
+    savePresetWindow->setUsingNativeTitleBar(true);
+    savePresetWindow->setVisible(true);
+
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)

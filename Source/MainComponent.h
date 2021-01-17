@@ -59,15 +59,18 @@ public:
         setUsingNativeTitleBar(true);
     }
 
+
     void closeButtonPressed() {
+
         setVisible(false);
     }
+
 };
 
 class SavePresetWindow : public juce::DocumentWindow
 {
 public:
-    SavePresetWindow(const juce::String name)
+    SavePresetWindow(const juce::String name, std::vector<Preset> &presetVec, juce::TextEditor &editorName, juce::TextButton &saveBtn, juce::TextButton &closeBtn)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
@@ -77,11 +80,16 @@ public:
         setBounds(getWidth(), getHeight(), 400, 400);
         setResizable(true, false);
         setUsingNativeTitleBar(true);
+        editorName.setBounds(0, 0, 150, 50);
+        saveBtn.setBounds(0, 100, 100, 50);
+        closeBtn.setBounds(100, 100, 100, 50);
     }
 
     void closeButtonPressed() {
-        setVisible(false);
+        delete this;
+        //setVisible(false);
     }
+
 };
 
 //==============================================================================
@@ -115,9 +123,12 @@ public:
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
     Preset loadPreset(int index);
 
+    void MainComponent::showSavePresetWindow();
+
 private:
     //==============================================================================
     // Your private member variables go here...
+    juce::Array<Component::SafePointer<Component>> windows;
 
     juce::Slider slider1;
     juce::Slider slider2;
@@ -183,7 +194,7 @@ private:
     std::unique_ptr<PresetWindow> wPreset;
     std::unique_ptr<SavePresetWindow> wSavePreset;
 
-    // 0:settings, 1:Preset, 2: Save Preset
+     //0:settings, 1:Preset, 2: Save Preset
     void showWindow(int windowType)
     {
         if (windowType == 0 && wSettings == nullptr)
@@ -198,7 +209,7 @@ private:
         }
         else if (windowType == 2 && wSavePreset == nullptr)
         {
-            wSavePreset.reset(new SavePresetWindow("Save Preset"));
+            //wSavePreset.reset(new SavePresetWindow("Save Preset", presetVec));
             wSavePreset->setVisible(true);
         }
     }
@@ -209,6 +220,11 @@ private:
         {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f }
     };
 
+
+private:
+    juce::TextEditor savePresetName;
+    juce::TextButton savePresetSaveBtn{ "Save" };
+    juce::TextButton savePresetCloseBtn{ "Close" };
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
