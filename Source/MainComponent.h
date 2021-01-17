@@ -192,6 +192,7 @@ public:
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
     Preset loadPreset(int index);
 
+    void MainComponent::colourAllComponent();
     //void MainComponent::showSavePresetWindow();
 
 private:
@@ -217,6 +218,13 @@ private:
     juce::ToggleButton btnBypassSlider2{ "Bypass" };
     juce::ToggleButton btnBypassSlider3{ "Bypass" };
     juce::ToggleButton btnBypassSlider4{ "Bypass" };
+
+
+    juce::TextButton btnOnOff{ "Sountrol On" };
+    juce::TextButton btnSettings{ "Sound Settings" };
+    juce::TextButton btnResetAll{ "Reset All" };
+    juce::TextButton btnPresets{ "Load Presets" };
+    juce::TextButton btnSavePreset{ "Save Preset" };
 
     //juce::ToggleButton lowCutBtn{ "Cut Unncessary Sounds" };
 
@@ -249,11 +257,6 @@ private:
 
     //juce::dsp::ProcessorChain<GainProcessor> filterBand1L;
     //juce::dsp::ProcessorChain<GainProcessor> filterBand1R;
-    juce::TextButton btnOnOff{ "Sountrol On" };
-    juce::TextButton btnSettings{ "Sound Settings" };
-    juce::TextButton btnResetAll{ "Reset All" };
-    juce::TextButton btnPresets{ "Load Presets" };
-    juce::TextButton btnSavePreset{ "Save Preset" };
 
 
 private:

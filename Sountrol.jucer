@@ -9,10 +9,11 @@
       <FILE id="SIjXrg" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
     </GROUP>
+    <FILE id="Qg63FR" name="icon.JPG" compile="0" resource="1" file="icon.JPG"/>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <VS2019 targetFolder="Builds/VisualStudio2019">
+    <VS2019 targetFolder="Builds/VisualStudio2019" bigIcon="Qg63FR" smallIcon="Qg63FR">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="Sountrol"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="Sountrol"/>
