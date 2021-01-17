@@ -57,29 +57,34 @@ MainComponent::MainComponent()
     addAndMakeVisible(btnResetSlider3);
     addAndMakeVisible(btnResetSlider4);
 
+    btnResetSlider1.onClick = [this] {resetSliders(1); };
+    btnResetSlider2.onClick = [this] {resetSliders(2); };
+    btnResetSlider3.onClick = [this] {resetSliders(3); };
+    btnResetSlider4.onClick = [this] {resetSliders(4); };
+
+
     // Bypass Buttons
     addAndMakeVisible(btnBypassSlider1);
     addAndMakeVisible(btnBypassSlider2);
     addAndMakeVisible(btnBypassSlider3);
     addAndMakeVisible(btnBypassSlider4);
 
-    addAndMakeVisible(lowCutBtn);
+    //addAndMakeVisible(lowCutBtn);
     
-
-
     // Global Buttons
     addAndMakeVisible(btnOnOff);
     btnOnOff.setColour(0x1000100, juce::Colours::forestgreen);
     btnOnOff.setColour(0x1000101, juce::Colours::indianred);
     btnOnOff.setClickingTogglesState(true);
     btnOnOff.onClick = [this] {
-        updateOnOffState(&btnOnOff); 
+        updateOnOffState(&btnOnOff);
     };
 
     addAndMakeVisible(btnSettings);
     btnSettings.onClick = [this] { showSettingsWindow(); };
 
     addAndMakeVisible(btnResetAll);
+    btnResetAll.onClick = [this] {resetSliders(0); };
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -245,6 +250,21 @@ void MainComponent::updateParameters() {
     auto newValue3 = slider3.getValue();
     auto newValue4 = slider4.getValue();
 
+    // bypass methods
+    if (btnOnOff.getToggleState()) {
+        newValue1 = 0;
+        newValue2 = 0;
+        newValue3 = 0;
+        newValue4 = 0;
+    }
+    else 
+    {
+        if (btnBypassSlider1.getToggleState()) newValue1 = 0;
+        if (btnBypassSlider2.getToggleState()) newValue2 = 0;
+        if (btnBypassSlider3.getToggleState()) newValue3 = 0;
+        if (btnBypassSlider4.getToggleState()) newValue4 = 0;
+    }
+
     auto& gain1L = filterBand1L.get<2>();
     auto& gain1R = filterBand1R.get<2>();
 
@@ -381,6 +401,19 @@ void MainComponent::updateOnOffState(juce::Button* button) {
     button->setButtonText(selectedString);
 }
 
+void MainComponent::resetSliders(int sliderNumber) {
+    if (sliderNumber == 0) {
+        slider1.setValue(0.0);
+        slider2.setValue(0.0);
+        slider3.setValue(0.0);
+        slider4.setValue(0.0);
+    }
+    else if (sliderNumber == 1) slider1.setValue(0.0);
+    else if (sliderNumber == 2) slider2.setValue(0.0);
+    else if (sliderNumber == 3) slider3.setValue(0.0);
+    else if (sliderNumber == 4) slider4.setValue(0.0);
+}
+
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g)
 {
@@ -396,24 +429,24 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    slider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 100, 100, 150);
-    slider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 100, 100, 150);
-    slider3.setBounds(getWidth() / 2, getHeight() / 2 - 100, 100, 150);
-    slider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 - 100, 100, 150);
+    slider1.setBounds(getWidth() / 2 - 190, getHeight() / 2 - 100, 70, 250);
+    slider2.setBounds(getWidth() / 2 - 90, getHeight() / 2 - 100, 70, 250);
+    slider3.setBounds(getWidth() / 2 + 10, getHeight() / 2 - 100, 70, 250);
+    slider4.setBounds(getWidth() / 2 + 110, getHeight() / 2 - 100, 70, 250);
 
-    btnResetSlider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 150, 40, 20);
-    btnResetSlider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 40, 20);
-    btnResetSlider3.setBounds(getWidth() / 2, getHeight() / 2 - 150, 40, 20);
-    btnResetSlider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 - 150, 40, 20);
+    btnResetSlider1.setBounds(getWidth() / 2 - 185, getHeight() / 2 - 155, 60, 30);
+    btnResetSlider2.setBounds(getWidth() / 2 - 85, getHeight() / 2 - 155, 60, 30);
+    btnResetSlider3.setBounds(getWidth() / 2 + 15, getHeight() / 2 - 155, 60, 30);
+    btnResetSlider4.setBounds(getWidth() / 2 + 115, getHeight() / 2 - 155, 60, 30);
 
-    btnBypassSlider1.setBounds(getWidth() / 2 - 210, getHeight() / 2 + 60, 80, 80);
-    btnBypassSlider2.setBounds(getWidth() / 2 - 110, getHeight() / 2 + 60, 80, 80);
-    btnBypassSlider3.setBounds(getWidth() / 2 - 10, getHeight() / 2 + 60, 80, 80);
-    btnBypassSlider4.setBounds(getWidth() / 2 + 90, getHeight() / 2 + 60, 80, 80);
+    btnBypassSlider1.setBounds(getWidth() / 2 - 200, getHeight() / 2 + 150, 80, 40);
+    btnBypassSlider2.setBounds(getWidth() / 2 - 100, getHeight() / 2 + 150, 80, 40);
+    btnBypassSlider3.setBounds(getWidth() / 2, getHeight() / 2 + 150, 80, 40);
+    btnBypassSlider4.setBounds(getWidth() / 2 + 100, getHeight() / 2 + 150, 80, 40);
 
-    lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
+    //lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
-    btnSettings.setBounds(20, getHeight() - 100, 180, 50);
-    btnResetAll.setBounds(getWidth() / 2 - 20, getHeight() - 100, 180, 50);
+    btnSettings.setBounds(20, getHeight() - 100, 200, 50);
+    btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 50);
 }
