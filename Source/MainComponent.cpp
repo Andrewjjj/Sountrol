@@ -311,29 +311,15 @@ void MainComponent::savePreset(juce::String name, float v1, float v2, float v3, 
     presetVec.push_back(p);
 }
 
-Preset MainComponent::loadPreset(int index) {
-    return presetVec.at(index);
+void MainComponent::loadPreset(float v1, float v2, float v3, float v4) {
+    slider1.setValue(v1);
+    slider2.setValue(v2);
+    slider3.setValue(v3);
+    slider4.setValue(v4);
+    updateParameters();
+    return;
 }
 
-//void MainComponent::showSavePresetWindow() 
-//{
-//    auto* savePresetWindow = new SavePresetWindow("Save Preset");
-//    windows.add(savePresetWindow);
-//
-//    juce::Rectangle<int> area(0, 0, 400, 300);
-//
-//    juce::RectanglePlacement placement(
-//        (juce::RectanglePlacement::xLeft | juce::RectanglePlacement::yTop | juce::RectanglePlacement::doNotResize)
-//        );
-//
-//    //auto result = placement.appliedTo(area, juce::Desktop::getInstance().getDisplays()
-//    //    .getPrimaryDisplay()->userArea.reduced(20));
-//    savePresetWindow->setBounds(area);
-//    savePresetWindow->setResizable(false, false);
-//    savePresetWindow->setUsingNativeTitleBar(true);
-//    savePresetWindow->setVisible(true);
-//
-//}
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {

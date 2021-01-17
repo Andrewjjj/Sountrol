@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include <functional>
 
 struct Preset {
     juce::String name;
@@ -55,7 +55,7 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent()
+    LPWComponent(std::vector<Preset>* vec, std::function<void()> callback)
     {
 
     }
@@ -66,20 +66,21 @@ public:
     {
 
     }
+    
 
 private:
-
+    std::vector<Preset>* presetVec; // use this to tabulate the data
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LPWComponent);
 };
 
 class LoadPresetWindow : public juce::DocumentWindow
 {
 public:
-    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec)
+    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void()> callback)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons), presetVec(vec)
+            DocumentWindow::allButtons), presetVec(vec), lpwComponent(vec, callback)
     {
         setDraggable(false);
         setBounds(getWidth(), getHeight(), 400, 400);
@@ -135,8 +136,9 @@ public:
     void savePreset()
     {
         Preset ps(txtPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
-
-        vecPtr->push_back(ps);
+        if (vecPtr->size() < 5) {
+            vecPtr->push_back(ps);
+        }
         return;
     }
 
@@ -214,7 +216,7 @@ public:
     void updateParameters();
 
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
-    Preset loadPreset(int index);
+    void loadPreset(float v1, float v2, float v3, float v4);
 
     void MainComponent::colourAllComponent();
     //void MainComponent::showSavePresetWindow();
@@ -300,7 +302,7 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec));
+            if (wPreset == nullptr) wPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPreset));
             wPreset->setVisible(true);
         }
         else if (windowType == 2)
