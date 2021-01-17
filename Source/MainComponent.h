@@ -370,11 +370,11 @@ private:
 
 private:
     std::vector<Preset> presetVec = {
-        {"Typical Use", -2.0f, -30.0f, -2.0f, 0.0f },
-        {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f },
-        {"Boxy", 0.0f, 5.0f, 0.0f, 0.0f},
-        {"MAX", 5.0f, 5.0f, 5.0f, 5.0f},
-        {"MIN", -30.0f, -30.0f, -30.0f, -30.0f}
+        {"General", -2.0f, -10.0f, -2.0f, 0.0f },
+        {"General - Enhanced", -0.0f, -25.0f, -2.0f, -20.0f },
+        {"Reduce Boom", -25.0f, -5.0f, 0.0f, 0.0f},
+        {"Reduce Sharpness", 0.0f, 0.0f, -6.5f, -7.0f},
+        {"Reduce Boxiness", -15.0f, -27.0f, 0.0f, 0.0f}
     };
 
 
@@ -382,7 +382,6 @@ private:
     juce::TextEditor savePresetName;
     juce::TextButton savePresetSaveBtn{ "Save" };
     juce::TextButton savePresetCloseBtn{ "Close" };
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
