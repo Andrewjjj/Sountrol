@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include <functional>
 
 struct Preset {
     juce::String name;
@@ -55,8 +55,7 @@ private:
 class LPWComponent : public juce::Component
 {
 public:
-    LPWComponent(std::vector<Preset>* vec)
-        : vecPtr(vec)
+    LPWComponent(std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
     {
         btnPreset1.setRadioGroupId(1,juce::dontSendNotification);
         btnPreset2.setRadioGroupId(1, juce::dontSendNotification);
@@ -104,6 +103,7 @@ public:
         btnPreset4.setBounds(0, 180, 300, 50);
         btnPreset5.setBounds(0, 240, 300, 50);
     }
+    
 
 private:
     std::vector<Preset>* vecPtr;
@@ -126,26 +126,25 @@ private:
 class LoadPresetWindow : public juce::DocumentWindow
 {
 public:
-    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec)
+    LoadPresetWindow(const juce::String name, std::vector<Preset>* vec, std::function<void(float, float, float, float)> callback)
         : DocumentWindow(name,
             juce::Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(juce::ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons), lpwComponent(vec)
+            DocumentWindow::allButtons), presetVec(vec), lpwComponent(vec, callback)
     {
         setDraggable(false);
         setBounds(getWidth(), getHeight(), 300, 300);
         setResizable(false, false);
         setUsingNativeTitleBar(true);
-
         setContentOwned(&lpwComponent, false);
     }
-
 
     void closeButtonPressed() {
         setVisible(false);
     }
 
 private:
+    std::vector<Preset> *presetVec;
     LPWComponent lpwComponent;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LoadPresetWindow);
 };
@@ -185,10 +184,10 @@ public:
 
     void savePreset()
     {
-        DBG("11");
-        Preset ps(lblPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
-
-        vecPtr->push_back(ps);
+        Preset ps(txtPresetName.getText(), slider1->getValue(), slider2->getValue(), slider3->getValue(), slider4->getValue());
+        if (vecPtr->size() < 5) {
+            vecPtr->push_back(ps);
+        }
         return;
     }
 
@@ -266,7 +265,7 @@ public:
     void updateParameters();
 
     void savePreset(juce::String name, float v1, float v2, float v3, float v4);
-    Preset loadPreset(int index);
+    void loadPreset(float v1, float v2, float v3, float v4);
 
     void MainComponent::colourAllComponent();
     //void MainComponent::showSavePresetWindow();
@@ -352,7 +351,7 @@ private:
         }
         else if (windowType == 1)
         {
-            if (wLoadPreset == nullptr) wLoadPreset.reset(new LoadPresetWindow("Presets", &presetVec));
+            if (wLoadPreset == nullptr) wLoadPreset.reset(new LoadPresetWindow("Presets", &presetVec, loadPreset()));
             wLoadPreset->setVisible(true);
         }
         else if (windowType == 2)
