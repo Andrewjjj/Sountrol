@@ -112,7 +112,7 @@ public:
     void initializeFrequencies();
     void updateParameters();
 
-    void savesPreset(juce::String name, float v1, float v2, float v3, float v4);
+    void savePreset(juce::String name, float v1, float v2, float v3, float v4);
     Preset loadPreset(int index);
 
 private:
@@ -204,9 +204,6 @@ private:
     }
 
 private:
-    
-    juce::Array<Preset> presetVec;
-    
     std::vector<Preset> presetVec = {
         {"Typical Use", -2.0f, -30.0f, -2.0f, 0.0f },
         {"Reduce Hiss", -0.0f, -3.0f, -2.0f, -20.0f }

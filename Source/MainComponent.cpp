@@ -303,8 +303,8 @@ void MainComponent::savePreset(juce::String name, float v1, float v2, float v3, 
     presetVec.push_back(p);
 }
 
-Preset* MainComponent::loadPreset(int index) {
-    return &presetVec.at(index);
+Preset MainComponent::loadPreset(int index) {
+    return presetVec.at(index);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
