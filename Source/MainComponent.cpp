@@ -239,17 +239,19 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     //    auto& lowFilter1RFreq = filterBand1R.get<0>().state;
     //    lowFilter1RFreq = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, freq1Low);
     //};
+
+    colourAllComponent();
 }
 
 void MainComponent::initializeFrequencies() {
     freq1Low = 100.0f;
     freq1High = 400.0f;
     freq2Low = 400.0f;
-    freq2High = 1000.0f;
-    freq3Low = 1000.0f;
+    freq2High = 1200.0f;
+    freq3Low = 1200.0f;
     freq3High = 4000.0f;
-    freq4Low = 1500.0f;
-    freq4High = 4000.0f;
+    //freq4Low = 1500.0f;
+    //freq4High = 4000.0f;
     freq5Low = 4000.0f;
     freq5High = 10000.0f;
     freq6Low = 10000.0f;
@@ -458,10 +460,23 @@ void MainComponent::resetSliders(int sliderNumber) {
 void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    //g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     // You can add your drawing code here!
-    
+    g.fillAll(juce::Colours::beige);
+
+
+
+}
+
+void MainComponent::colourAllComponent() {
+
+    auto textColor = juce::Colour::fromString("#8B4411");
+
+    btnBypassSlider1.setColour(0x1000100, textColor);
+    btnBypassSlider2.setColour(0x1000100, textColor);
+    btnBypassSlider3.setColour(0x1000100, textColor);
+    btnBypassSlider4.setColour(0x1000100, textColor);
 }
 
 void MainComponent::resized()
@@ -487,8 +502,8 @@ void MainComponent::resized()
     //lowCutBtn.setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 80, 20);
 
     btnOnOff.setBounds(getWidth() / 2 - 200, 20, 400, 100);
-    btnSettings.setBounds(20, getHeight() - 100, 200, 50);
-    btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 50);
-    btnPresets.setBounds(getWidth() / 2, getHeight() - 50, 200, 50);
-    btnSavePreset.setBounds(20, getHeight() - 50, 200, 50);
+    btnSettings.setBounds(20, getHeight() - 100, 200, 40);
+    btnResetAll.setBounds(getWidth() / 2, getHeight() - 100, 200, 40);
+    btnPresets.setBounds(getWidth() / 2, getHeight() - 50, 200, 40);
+    btnSavePreset.setBounds(20, getHeight() - 50, 200, 40);
 }
