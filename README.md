@@ -28,10 +28,10 @@ Hence, we decided to create an app that can help the speaker and listener have a
 
 ## How to use
 It enhances the audio experience by the listener and / or speaker. We discovered that the audio discomforts can be categorized into the following:
-**1) Basiness / Boominess**. These types have a lot of 'Bass' in the Audio. This happens frequency due to the speaker's natural voice more than the mic qualities. The sound becomes 'muffled' that it is often hard to hear what they are saying.
-**2) Boxiness**. These are the MOST COMMON audio discomforts. It happens a lot especially with a labtop built-in mics. It is also caused mostly due to a poor acoustic treatment of the room. You can hear a lot of this 'boxiness' in places like ETLC lecture rooms.
-**3) Sharpness**. These are common when the volume becomes loud. This is mostly common with labtop built-in mics as well. Long exposure to this 'Sharpness' can hurt your ears a lot.
-**4) Hissness**. These are the uncomfortable sound that we can hear when someone says an 'sssss' sound.
+**1. Basiness / Boominess**. These types have a lot of 'Bass' in the Audio. This happens frequency due to the speaker's natural voice more than the mic qualities. The sound becomes 'muffled' that it is often hard to hear what they are saying.
+**2. Boxiness**. These are the MOST COMMON audio discomforts. It happens a lot especially with a labtop built-in mics. It is also caused mostly due to a poor acoustic treatment of the room. You can hear a lot of this 'boxiness' in places like ETLC lecture rooms.
+**3. Sharpness**. These are common when the volume becomes loud. This is mostly common with labtop built-in mics as well. Long exposure to this 'Sharpness' can hurt your ears a lot.
+**4. Hissness**. These are the uncomfortable sound that we can hear when someone says an 'sssss' sound.
 
 ## How we built it
 Since we needed to have this running real-time and performance was crucial, we could not use languages like Python. 
